@@ -597,12 +597,12 @@
             return names[category] || category;
         }
 
-        async function displayCurrentBookings() {
+     async function displayCurrentBookings() {
             const container = document.getElementById('current-bookings');
             container.innerHTML = '<p class="text-white/70 text-center">Caricamento prenotazioni...</p>';
 
             try {
-                const { data: bookings, error } = await supabaseClient
+                const { data: bookings, error } = await supabaseClient // Usiamo supabaseClient
                     .from('bookings')
                     .select('*');
 
@@ -618,8 +618,9 @@
                 }
 
                 container.innerHTML = bookings.map(booking => {
-                    const currentPlayers = (booking.players && booking.players.length) ? booking.players : [];
-                   [cite_start]const playersDisplay = currentPlayers.length > 0 ? currentPlayers.join(', ') : 'Nessun giocatore'; [cite: 1]
+                    const currentPlayers = (booking.players && Array.isArray(booking.players)) ? booking.players : []; // Aggiunta verifica Array.isArray
+                    const playersDisplay = currentPlayers.length > 0 ? currentPlayers.join(', ') : 'Nessun giocatore';
+                    
                     return `
                         <div class="bg-white/10 rounded-lg p-4 flex flex-col sm:flex-row justify-between items-center" data-booking-id="${booking.id}">
                             <div class="text-white mb-2 sm:mb-0 text-center sm:text-left">
