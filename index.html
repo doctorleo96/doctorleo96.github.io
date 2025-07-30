@@ -1,39 +1,36 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    <script>
-       
-        // Configurazione Supabase
-        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE';
-        
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        let currentBooking = { ... };
-        let navigationHistory = [...];
-
-        async function init() { ... }
-        const gameData = { ... };
-        function getNextFridayResetTime() { ... }
-        function getNextFridayEventTime() { ... }
-        function updateCountdown() { ... }
-        function selectCategory(category) { ... }
-        function showGameSelection(category) { ... }
-        function selectGame(gameName) { ... }
-        function showBookingForm(bookingToJoin = null) { ... }
-        function selectCampaignType(type) { ... }
-        async function submitBooking(event) { ... }
-        async function joinBooking(bookingId, playerName) { ... }
-        function showSuccessMessage(booking, isJoin = false) { ... }
-        function resetBooking() { ... }
-        function goBack() { ... }
-        function updateBreadcrumb() { ... }
-        function getCategoryName(category) { ... }
-        async function displayCurrentBookings() { ... }
-        function promptJoinBooking(bookingId, gameName, category) { ... }
-        async function cancelBooking(bookingId) { ... }
-
-        document.addEventListener('DOMContentLoaded', init);
+<script>
+    // Configurazione Supabase 
+    const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; [cite: 1]
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; [cite: 1]
     
-    </script>
-</body>
-</html>
+    // Inizializza il client Supabase 
+    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); [cite: 1]
+
+    let currentBooking = { /* ... */ }; [cite: 1]
+    let navigationHistory = [ /* ... */ ]; [cite: 1]
+
+    async function init() { /* ... */ } [cite: 1]
+    const gameData = { /* ... */ }; [cite: 1]
+    function getNextFridayResetTime() { /* ... */ } [cite: 1]
+    function getNextFridayEventTime() { /* ... */ } [cite: 1]
+    function updateCountdown() { /* ... */ } [cite: 1]
+    function selectCategory(category) { /* ... */ } [cite: 1]
+    function showGameSelection(category) { /* ... */ } [cite: 1]
+    function selectGame(gameName) { /* ... */ } [cite: 1]
+    function showBookingForm(bookingToJoin = null) { /* ... */ } [cite: 1]
+    function selectCampaignType(type) { /* ... */ } [cite: 1]
+    async function submitBooking(event) { /* ... */ } [cite: 1]
+    async function joinBooking(bookingId, playerName) { /* ... */ } [cite: 1]
+    function showSuccessMessage(booking, isJoin = false) { /* ... */ } [cite: 1]
+    function resetBooking() { /* ... */ } [cite: 1]
+    function goBack() { /* ... */ } [cite: 1]
+    function updateBreadcrumb() { /* ... */ } [cite: 1]
+    function getCategoryName(category) { /* ... */ } [cite: 1]
+    async function displayCurrentBookings() { /* ... */ } [cite: 1]
+    function promptJoinBooking(bookingId, gameName, category) { /* ... */ } [cite: 1]
+    async function cancelBooking(bookingId) { /* ... */ } [cite: 1]
+
+    document.addEventListener('DOMContentLoaded', init); [cite: 1]
+</script>
