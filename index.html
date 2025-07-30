@@ -5,15 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prenotazioni Giochi Venerdì Sera</title>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
-
+        
         .tree-line {
             position: relative;
         }
-
+        
         .tree-line::before {
             content: '';
             position: absolute;
@@ -23,7 +24,7 @@
             height: 2px;
             background: #6366f1;
         }
-
+        
         .tree-branch::before {
             content: '';
             position: absolute;
@@ -33,22 +34,22 @@
             height: 100%;
             background: #6366f1;
         }
-
+        
         .fade-in {
             animation: fadeIn 0.5s ease-in;
         }
-
+        
         @keyframes fadeIn {
             from { opacity: 0;
             transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0);
             }
         }
-
+        
         .pulse-animation {
             animation: pulse 2s infinite;
         }
-
+        
         @keyframes pulse {
             0%, 100% { opacity: 1;
             }
@@ -57,7 +58,7 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 min-h-screen">
     <div class="container mx-auto px-4 py-8">
         <div class="text-center mb-12">
             <h1 class="text-5xl font-bold text-white mb-4">🎮 Prenotazioni Venerdì Sera</h1>
@@ -84,7 +85,7 @@
                             <h3 class="text-xl font-semibold mb-2">Giochi di Ruolo</h3>
                             <p class="text-red-100">D&D, Call of Cthulhu, Warhammer e altri</p>
                         </button>
-
+                        
                         <button onclick="selectCategory('board')" class="category-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
                             <div class="text-4xl mb-3">🎲</div>
                             <h3 class="text-xl font-semibold mb-2">Giochi da Tavolo</h3>
@@ -111,7 +112,7 @@
                         </button>
                         <h2 class="text-3xl font-semibold text-white">Completa la Prenotazione</h2>
                     </div>
-
+                    
                     <div class="bg-white/10 rounded-lg p-6 mb-6">
                         <h3 class="text-xl font-semibold text-white mb-4">Riepilogo Prenotazione</h3>
                         <div class="space-y-2 text-white">
@@ -125,7 +126,7 @@
                             <label class="block text-white font-semibold mb-2">Nome Completo</label>
                             <input type="text" id="player-name" required class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none">
                         </div>
-
+                        
                         <div id="campaign-type-selection" class="hidden">
                             <label class="block text-white font-semibold mb-2">Tipo di Sessione</label>
                             <div class="grid grid-cols-2 gap-4">
@@ -142,12 +143,12 @@
                             </div>
                             <input type="hidden" id="campaign-type" required>
                         </div>
-
+                   
                         <div>
                             <label class="block text-white font-semibold mb-2">Note Aggiuntive (opzionale)</label>
                             <textarea id="notes" rows="3" class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none" placeholder="Eventuali richieste speciali..."></textarea>
                         </div>
-
+                        
                         <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
                             🎯 Conferma Prenotazione
                         </button>
@@ -176,430 +177,435 @@
             </div>
         </div>
     </div>
-<script>
-    // Configurazione Supabase 
-    const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; 
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; 
 
-    // Inizializza il client Supabase
-    const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    <script>
+        // Configurazione Supabase 
+        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; 
+        
+        // Inizializza il client Supabase
+        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // VARIABILI GLOBALI (DICHIARATE QUI PER PRIMA)
-    let currentBooking = {
-        category: '',
-        game: '',
-        time: '',
-        step: 'category'
-    };
-    let navigationHistory = ['category'];
-
-    async function init() {
-        updateCountdown();
-        await displayCurrentBookings();
-        setInterval(updateCountdown, 1000);
-
-        // checkWeeklyReset(); 
-        // setInterval(checkWeeklyReset, 60000); 
-    }
-
-    // Game data structure
-    const gameData = {
-        role: [
-            { name: 'Dungeons & Dragons 5e', emoji: '🐉', players: '3-6' },
-            { name: 'Call of Cthulhu', emoji: '🐙', players: '3-6' },
-            { name: 'Warhammer 40k RPG', emoji: '⚡', players: '3-6' },
-            { name: 'Altri Giochi di Ruolo', emoji: '🎭', players: '2-8' }
-        ],
-        board: [
-            { name: 'CADUTA LIBERA', emoji: '🪂', players: '2-6' },
-            { name: 'DECKTECTIVE ROSE ROSSO SANGUE', emoji: '🌹', players: '1-6' },
-            { name: 'DECKTECTIVE INCUBO ALLO SPECCHIO', emoji: '🪞', players: '1-6' },
-            { name: 'LAS VEGAS ROYALE', emoji: '🎰', players: '2-5' },
-            { name: 'ALIEN IL DESTINO DELLA NOSTROMO', emoji: '👽', players: '1-5' },
-            { name: 'MINECRAFT HEROES OF VILLAGE', emoji: '⛏️', players: '2-4' },
-            { name: 'VILLAINOUS INTRODUCTION TO EVIL', emoji: '😈', players: '2-6' },
-            { name: 'VILLAINS THE CARD GAME', emoji: '🃏', players: '2-4' },
-            { name: 'LICANTROPO PRIMA LUCE', emoji: '🌅', players: '5-10' },
-            { name: 'LICANTROPO LUNA PIENA', emoji: '🌕', players: '5-10' },
-            { name: 'WHAT DO YOU MEAN', emoji: '❓', players: '3-8' },
-            { name: 'FUN LAND', emoji: '🎡', players: '2-4' },
-            { name: 'TICKET TO RIDE', emoji: '🚂', players: '2-5' },
-            { name: 'CORTEX', emoji: '🧠', players: '2-6' },
-            { name: 'EXPLODING KITTENS', emoji: '💥', players: '2-5' },
-            { name: 'JUNGLE SPEED', emoji: '🐆', players: '3-8' },
-            { name: 'PANDEMIC', emoji: '🦠', players: '2-4' },
-            { name: 'UNO', emoji: '🔴', players: '2-10' },
-            { name: 'SPLENDOR', emoji: '💎', players: '2-4' },
-            { name: 'COUNCIL SHADOWS', emoji: '🏛️', players: '2-5' },
-            { name: 'KINGDOMINO', emoji: '👑', players: '2-4' },
-            { name: '7 WONDERS', emoji: '🏛️', players: '2-7' },
-            { name: 'FUNNY FARMER', emoji: '🚜', players: '2-4' },
-            { name: 'SCOTLAND YARD', emoji: '🕵️', players: '3-6' },
-            { name: 'DERNIER UNO SOLO', emoji: '🎯', players: '2-8' },
-            { name: 'AZUL', emoji: '🎨', players: '2-4' },
-            { name: 'BONSAI', emoji: '🌳', players: '1-4' },
-            { name: 'IST DA WER', emoji: '🤔', players: '3-6' },
-            { name: 'MIRAKEL MIX', emoji: '✨', players: '2-5' },
-            { name: 'BANG', emoji: '🔫', players: '4-7' },
-            { name: 'LUPUS IN TABULA', emoji: '🐺', players: '8-24' },
-            { name: 'LEO VA DAL BARBIERE', emoji: '✂️', players: '2-5' },
-            { name: 'KAKURO', emoji: '🔢', players: '1-4' },
-            { name: 'ON THE ROAD', emoji: '🛣️', players: '2-6' },
-            { name: 'COLORETTO', emoji: '🎨', players: '3-5' },
-            { name: 'DECKSCAPE', emoji: '🗝️', players: '1-6' },
-            { name: 'SHERLOCK HOLMES CONSULENTE', emoji: '🔍', players: '1-8' },
-            { name: 'PARTY LINES', emoji: '📞', players: '4-8' },
-            { name: 'PLAGIO', emoji: '📚', players: '3-8' },
-            { name: 'FRESH FRUITS', emoji: '🍎', players: '2-5' },
-            { name: 'I BUONI E I CATTIVI FANTASMI', emoji: '👻', players: '2-4' },
-            { name: 'CARTAGENA', emoji: '🏴‍☠️', players: '2-5' },
-            { name: 'PASSA LA BOMBA', emoji: '💣', players: '2-12' },
-            { name: 'DIXIT', emoji: '🎭', players: '3-8' },
-            { name: 'MYSTERIUM', emoji: '🔮', players: '2-7' },
-            { name: 'LAMA', emoji: '🦙', players: '2-6' },
-            { name: 'UNSTABLE UNICORNS', emoji: '🦄', players: '2-8' },
-            { name: 'SILVER MINE', emoji: '⛏️', players: '3-6' },
-            { name: 'COYOTE', emoji: '🐺', players: '3-6' },
-            { name: 'DIXIT MIRRORS', emoji: '🪞', players: '3-8' },
-            { name: 'CARCASSONNE', emoji: '🏰', players: '2-5' },
-            { name: 'SABOTEUR', emoji: '⛏️', players: '3-10' },
-            { name: 'PALEO', emoji: '🦕', players: '1-4' },
-            { name: 'STONE AGE', emoji: '🗿', players: '2-4' },
-            { name: 'INKOGNITO', emoji: '🎭', players: '3-5' },
-            { name: 'KALEIDOS', emoji: '🔍', players: '2-12' },
-            { name: 'ACCIPICCHIA', emoji: '😲', players: '2-8' },
-            { name: 'VENICE CONNECTION', emoji: '🚤', players: '2-6' },
-            { name: 'FANTASCATTI', emoji: '👻', players: '2-8' },
-            { name: 'DOBBLE', emoji: '👁️', players: '2-8' },
-            { name: 'BARKING KITTENS', emoji: '🐱', players: '2-5' },
-            { name: 'OVERBOOKING', emoji: '✈️', players: '2-5' },
-            { name: 'LE LEGGENDE DI ANDOR', emoji: '⚔️', players: '2-4' },
-            { name: 'CATAN', emoji: '🏝️', players: '3-4' },
-            { name: 'CAN\'T STOP', emoji: '🎲', players: '2-4' },
-            { name: 'PICCHIATELLO', emoji: '🤪', players: '2-6' }
-        ]
-    };
-    function getNextFridayResetTime() {
-        const now = new Date();
-        const targetResetHour = 20;
-        let nextFriday = new Date(now);
-        const daysUntilFriday = (5 - now.getDay() + 7) % 7;
-        nextFriday.setDate(now.getDate() + daysUntilFriday);
-        nextFriday.setHours(targetResetHour, 0, 0, 0);
-        if (now.getDay() === 5 && now.getHours() >= targetResetHour) {
-            nextFriday.setDate(nextFriday.getDate() + 7);
-        }
-        return nextFriday;
-    }
-    function getNextFridayEventTime() {
-        const now = new Date();
-        const nextFriday = new Date();
-        const daysUntilFriday = (5 - now.getDay() + 7) % 7;
-        if (daysUntilFriday === 0 && now.getDay() === 5) {
-            if (now.getHours() < 23 || (now.getHours() === 23 && now.getMinutes() < 59)) {
-                nextFriday.setHours(23, 59, 59, 999);
-            } else {
-                nextFriday.setDate(now.getDate() + 7);
-                nextFriday.setHours(23, 59, 59, 999);
-            }
-        } else {
-            nextFriday.setDate(now.getDate() + (daysUntilFriday || 7));
-            nextFriday.setHours(23, 59, 59, 999);
-        }
-        return nextFriday;
-    }
-    function updateCountdown() {
-        const now = new Date();
-        const nextFridayEvent = getNextFridayEventTime();
-        const timeUntil = nextFridayEvent - now;
-        if (timeUntil > 0) {
-            const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000);
-            document.getElementById('countdown').innerHTML =
-                `⏰ Tempo rimanente: ${days}g ${hours}h ${minutes}m ${seconds}s`;
-        } else {
-            document.getElementById('countdown').innerHTML = '🎮 È venerdì sera! Buon divertimento!';
-        }
-        document.getElementById('next-reset').textContent = getNextFridayResetTime().toLocaleDateString('it-IT', {
-            weekday: 'long',
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-    /* checkWeeklyReset()
-    async function checkWeeklyReset() {
-        const now = new Date();
-        const nextFridayReset = getNextFridayResetTime();
-        const lastLocalReset = localStorage.getItem('lastResetTriggered');
-        if (now > nextFridayReset && (!lastLocalReset || new Date(lastLocalReset) < nextFridayReset)) {
-            console.log("Tentativo di reset settimanale...");
-            try {
-            } catch (error) {
-                console.error("Errore durante il reset settimanale:", error);
-            }
-        }
-    }
-    */
-    function selectCategory(category) {
-        currentBooking.category = category;
-        currentBooking.step = 'game';
-        navigationHistory.push('game');
-
-        showGameSelection(category);
-        updateBreadcrumb();
-    }
-    function showGameSelection(category) {
-        document.getElementById('category-selection').classList.add('hidden');
-        document.getElementById('game-selection').classList.remove('hidden');
-        document.getElementById('game-selection').classList.add('fade-in');
-
-        const categoryNames = {
-            role: 'Giochi di Ruolo',
-            board: 'Giochi da Tavolo'
-        };
-        document.getElementById('game-selection-title').textContent = categoryNames[category];
-
-        const gamesGrid = document.getElementById('games-grid');
-        gamesGrid.innerHTML = '';
-        gameData[category].forEach(game => {
-            const gameButton = document.createElement('button');
-            gameButton.className = 'bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105';
-            gameButton.onclick = () => selectGame(game.name);
-            gameButton.innerHTML = `
-                <div class="text-3xl mb-2">${game.emoji}</div>
-                <div class="font-semibold mb-1">${game.name}</div>
-                <div class="text-sm opacity-75">${game.players} giocatori</div>
-            `;
-            gamesGrid.appendChild(gameButton);
-        });
-    }
-    function selectGame(gameName) {
-        currentBooking.game = gameName;
-        currentBooking.step = 'booking';
-        navigationHistory.push('booking');
-
-        showBookingForm();
-        updateBreadcrumb();
-    }
-    function showBookingForm() {
-        document.getElementById('game-selection').classList.add('hidden');
-        document.getElementById('booking-form').classList.remove('hidden');
-        document.getElementById('booking-form').classList.add('fade-in');
-
-        const campaignTypeDiv = document.getElementById('campaign-type-selection');
-        if (currentBooking.category === 'role') {
-            campaignTypeDiv.classList.remove('hidden');
-        } else {
-            campaignTypeDiv.classList.add('hidden');
-        }
-
-        document.getElementById('selected-game').textContent = currentBooking.game;
-        document.getElementById('selected-date').textContent = getNextFridayEventTime().toLocaleDateString('it-IT', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric'
-        });
-    }
-    function selectCampaignType(type) {
-        document.getElementById('campaign-type').value = type;
-        document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
-        document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
-        if (type === 'oneshot') {
-            document.getElementById('oneshot-btn').classList.add('bg-green-500', 'border-green-400');
-        } else {
-            document.getElementById('campaign-btn').classList.add('bg-green-500', 'border-green-400');
-        }
-    }
-    async function submitBooking(event) {
-        event.preventDefault();
-        const campaignTypeField = document.getElementById('campaign-type');
-        const campaignType = campaignTypeField ? campaignTypeField.value : null;
-        const booking = {
-        if (currentBooking.category === 'role' && !campaignType) {
-            alert('Seleziona il tipo di sessione.');
-            return;
-        }
-            id: crypto.randomUUID(),
-            category: currentBooking.category,
-            game: currentBooking.game,
-            playerName: document.getElementById('player-name').value,
-            notes: document.getElementById('notes').value,
-            campaignType: campaignType,
-            date: getNextFridayEventTime().toISOString(),
-            timestamp: new Date().toISOString(),
-            isPermanent: campaignType === 'campaign'
-        };
-        try {
-            const { data, error } = await supabase
-                .from('bookings')
-                .insert([booking]);
-            if (error) {
-                console.error("Errore durante la prenotazione con Supabase:", error.message);
-                alert('Errore durante la prenotazione: ' + error.message);
-            } else {
-                showSuccessMessage(booking);
-                await displayCurrentBookings();
-            }
-        } catch (error) {
-                alert('Impossibile connettersi al server per la prenotazione: ' + error.message);
-                console.error("Errore di rete o server (Supabase):", error);
-        }
-    }
-    function showSuccessMessage(booking) {
-        document.getElementById('booking-form').classList.add('hidden');
-        document.getElementById('success-message').classList.remove('hidden');
-        document.getElementById('success-message').classList.add('fade-in');
-
-        document.getElementById('booking-details').innerHTML = `
-            <p><strong>Gioco:</strong> ${booking.game}</p>
-            <p><strong>Nome:</strong> ${booking.playerName}</p>
-            ${booking.campaignType ? `<p><strong>Tipo:</strong> ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}</p>` : ''}
-            <p><strong>ID Prenotazione:</strong> #${booking.id}</p>
-        `;
-        document.getElementById('breadcrumb').classList.add('hidden');
-    }
-    function resetBooking() {
-        currentBooking = {
+        // ********* VARIABILI GLOBALI (DICHIARATE QUI PER PRIMA) *********
+        // Current booking state
+        let currentBooking = {
             category: '',
             game: '',
             time: '',
             step: 'category'
         };
-        navigationHistory = ['category'];
+        // Navigation history
+        let navigationHistory = ['category'];
+        // ********* FINE DELLE VARIABILI GLOBALI *********
 
-        document.getElementById('success-message').classList.add('hidden');
-        document.getElementById('category-selection').classList.remove('hidden');
-        document.getElementById('category-selection').classList.add('fade-in');
 
-        document.getElementById('player-name').value = '';
-        document.getElementById('notes').value = '';
-        document.getElementById('campaign-type').value = '';
+        async function init() {
+            updateCountdown();
+            await displayCurrentBookings();
+            setInterval(updateCountdown, 1000);
 
-        document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
-        document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
-        document.getElementById('breadcrumb').classList.add('hidden');
+            // checkWeeklyReset(); 
+            // setInterval(checkWeeklyReset, 60000); 
+        }
 
-        updateBreadcrumb();
-    }
-    function goBack() {
-        if (navigationHistory.length > 1) {
-            navigationHistory.pop();
-            const previousStep = navigationHistory[navigationHistory.length - 1];
-
-            document.getElementById('category-selection').classList.add('hidden');
-            document.getElementById('game-selection').classList.add('hidden');
-            document.getElementById('booking-form').classList.add('hidden');
-
-            if (previousStep === 'category') {
-                document.getElementById('category-selection').classList.remove('hidden');
-                currentBooking.step = 'category';
-            } else if (previousStep === 'game') {
-                showGameSelection(currentBooking.category);
-                currentBooking.step = 'game';
+        // Game data structure
+        const gameData = {
+            role: [
+                { name: 'Dungeons & Dragons 5e', emoji: '🐉', players: '3-6' },
+                { name: 'Call of Cthulhu', emoji: '🐙', players: '3-6' },
+                { name: 'Warhammer 40k RPG', emoji: '⚡', players: '3-6' },
+                { name: 'Altri Giochi di Ruolo', emoji: '🎭', players: '2-8' }
+            ],
+            board: [
+                { name: 'CADUTA LIBERA', emoji: '🪂', players: '2-6' },
+                { name: 'DECKTECTIVE ROSE ROSSO SANGUE', emoji: '🌹', players: '1-6' },
+                { name: 'DECKTECTIVE INCUBO ALLO SPECCHIO', emoji: '🪞', players: '1-6' },
+                { name: 'LAS VEGAS ROYALE', emoji: '🎰', players: '2-5' },
+                { name: 'ALIEN IL DESTINO DELLA NOSTROMO', emoji: '👽', players: '1-5' },
+                { name: 'MINECRAFT HEROES OF VILLAGE', emoji: '⛏️', players: '2-4' },
+                { name: 'VILLAINOUS INTRODUCTION TO EVIL', emoji: '😈', players: '2-6' },
+                { name: 'VILLAINS THE CARD GAME', emoji: '🃏', players: '2-4' },
+                { name: 'LICANTROPO PRIMA LUCE', emoji: '🌅', players: '5-10' },
+                { name: 'LICANTROPO LUNA PIENA', emoji: '🌕', players: '5-10' },
+                { name: 'WHAT DO YOU MEAN', emoji: '❓', players: '3-8' },
+                { name: 'FUN LAND', emoji: '🎡', players: '2-4' },
+                { name: 'TICKET TO RIDE', emoji: '🚂', players: '2-5' },
+                { name: 'CORTEX', emoji: '🧠', players: '2-6' },
+                { name: 'EXPLODING KITTENS', emoji: '💥', players: '2-5' },
+                { name: 'JUNGLE SPEED', emoji: '🐆', players: '3-8' },
+                { name: 'PANDEMIC', emoji: '🦠', players: '2-4' },
+                { name: 'UNO', emoji: '🔴', players: '2-10' },
+                { name: 'SPLENDOR', emoji: '💎', players: '2-4' },
+                { name: 'COUNCIL SHADOWS', emoji: '🏛️', players: '2-5' },
+                { name: 'KINGDOMINO', emoji: '👑', players: '2-4' },
+                { name: '7 WONDERS', emoji: '🏛️', players: '2-7' },
+                { name: 'FUNNY FARMER', emoji: '🚜', players: '2-4' },
+                { name: 'SCOTLAND YARD', emoji: '🕵️', players: '3-6' },
+                { name: 'DERNIER UNO SOLO', emoji: '🎯', players: '2-8' },
+                { name: 'AZUL', emoji: '🎨', players: '2-4' },
+                { name: 'BONSAI', emoji: '🌳', players: '1-4' },
+                { name: 'IST DA WER', emoji: '🤔', players: '3-6' },
+                { name: 'MIRAKEL MIX', emoji: '✨', players: '2-5' },
+                { name: 'BANG', emoji: '🔫', players: '4-7' },
+                { name: 'LUPUS IN TABULA', emoji: '🐺', players: '8-24' },
+                { name: 'LEO VA DAL BARBIERE', emoji: '✂️', players: '2-5' },
+                { name: 'KAKURO', emoji: '🔢', players: '1-4' },
+                { name: 'ON THE ROAD', emoji: '🛣️', players: '2-6' },
+                { name: 'COLORETTO', emoji: '🎨', players: '3-5' },
+                { name: 'DECKSCAPE', emoji: '🗝️', players: '1-6' },
+                { name: 'SHERLOCK HOLMES CONSULENTE', emoji: '🔍', players: '1-8' },
+                { name: 'PARTY LINES', emoji: '📞', players: '4-8' },
+                { name: 'PLAGIO', emoji: '📚', players: '3-8' },
+                { name: 'FRESH FRUITS', emoji: '🍎', players: '2-5' },
+                { name: 'I BUONI E I CATTIVI FANTASMI', emoji: '👻', players: '2-4' },
+                { name: 'CARTAGENA', emoji: '🏴‍☠️', players: '2-5' },
+                { name: 'PASSA LA BOMBA', emoji: '💣', players: '2-12' },
+                { name: 'DIXIT', emoji: '🎭', players: '3-8' },
+                { name: 'MYSTERIUM', emoji: '🔮', players: '2-7' },
+                { name: 'LAMA', emoji: '🦙', players: '2-6' },
+                { name: 'UNSTABLE UNICORNS', emoji: '🦄', players: '2-8' },
+                { name: 'SILVER MINE', emoji: '⛏️', players: '3-6' },
+                { name: 'COYOTE', emoji: '🐺', players: '3-6' },
+                { name: 'DIXIT MIRRORS', emoji: '🪞', players: '3-8' },
+                { name: 'CARCASSONNE', emoji: '🏰', players: '2-5' },
+                { name: 'SABOTEUR', emoji: '⛏️', players: '3-10' },
+                { name: 'PALEO', emoji: '🦕', players: '1-4' },
+                { name: 'STONE AGE', emoji: '🗿', players: '2-4' },
+                { name: 'INKOGNITO', emoji: '🎭', players: '3-5' },
+                { name: 'KALEIDOS', emoji: '🔍', players: '2-12' },
+                { name: 'ACCIPICCHIA', emoji: '😲', players: '2-8' },
+                { name: 'VENICE CONNECTION', emoji: '🚤', players: '2-6' },
+                { name: 'FANTASCATTI', emoji: '👻', players: '2-8' },
+                { name: 'DOBBLE', emoji: '👁️', players: '2-8' },
+                { name: 'BARKING KITTENS', emoji: '🐱', players: '2-5' },
+                { name: 'OVERBOOKING', emoji: '✈️', players: '2-5' },
+                { name: 'LE LEGGENDE DI ANDOR', emoji: '⚔️', players: '2-4' },
+                { name: 'CATAN', emoji: '🏝️', players: '3-4' },
+                { name: 'CAN\'T STOP', emoji: '🎲', players: '2-4' },
+                { name: 'PICCHIATELLO', emoji: '🤪', players: '2-6' }
+            ]
+        };
+        function getNextFridayResetTime() {
+            const now = new Date();
+            const targetResetHour = 20;
+            let nextFriday = new Date(now);
+            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
+            nextFriday.setDate(now.getDate() + daysUntilFriday);
+            nextFriday.setHours(targetResetHour, 0, 0, 0);
+            if (now.getDay() === 5 && now.getHours() >= targetResetHour) {
+                nextFriday.setDate(nextFriday.getDate() + 7);
             }
-
+            return nextFriday;
+        }
+        function getNextFridayEventTime() {
+            const now = new Date();
+            const nextFriday = new Date();
+            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
+            if (daysUntilFriday === 0 && now.getDay() === 5) {
+                if (now.getHours() < 23 || (now.getHours() === 23 && now.getMinutes() < 59)) {
+                    nextFriday.setHours(23, 59, 59, 999);
+                } else {
+                    nextFriday.setDate(now.getDate() + 7);
+                    nextFriday.setHours(23, 59, 59, 999);
+                }
+            } else {
+                nextFriday.setDate(now.getDate() + (daysUntilFriday || 7));
+                nextFriday.setHours(23, 59, 59, 999);
+            }
+            return nextFriday;
+        }
+        function updateCountdown() {
+            const now = new Date();
+            const nextFridayEvent = getNextFridayEventTime();
+            const timeUntil = nextFridayEvent - now;
+            if (timeUntil > 0) {
+                const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000);
+                document.getElementById('countdown').innerHTML =
+                    `⏰ Tempo rimanente: ${days}g ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                document.getElementById('countdown').innerHTML = '🎮 È venerdì sera! Buon divertimento!';
+            }
+            document.getElementById('next-reset').textContent = getNextFridayResetTime().toLocaleDateString('it-IT', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        /* checkWeeklyReset()
+        async function checkWeeklyReset() {
+            const now = new Date();
+            const nextFridayReset = getNextFridayResetTime();
+            const lastLocalReset = localStorage.getItem('lastResetTriggered');
+            if (now > nextFridayReset && (!lastLocalReset || new Date(lastLocalReset) < nextFridayReset)) {
+                console.log("Tentativo di reset settimanale...");
+                try {
+                } catch (error) {
+                    console.error("Errore durante il reset settimanale:", error);
+                }
+            }
+        }
+        */
+        function selectCategory(category) {
+            currentBooking.category = category;
+            currentBooking.step = 'game';
+            navigationHistory.push('game');
+            
+            showGameSelection(category);
             updateBreadcrumb();
         }
-    }
-    function updateBreadcrumb() {
-        const breadcrumb = document.getElementById('breadcrumb');
-        const breadcrumbContent = document.getElementById('breadcrumb-content');
-
-        if (navigationHistory.length > 1) {
-            breadcrumb.classList.remove('hidden');
-            const steps = {
-                category: '🏠 Categorie',
-                game: `🎮 ${currentBooking.category ? getCategoryName(currentBooking.category) : 'Giochi'}`,
-                booking: '📝 Prenotazione'
+        function showGameSelection(category) {
+            document.getElementById('category-selection').classList.add('hidden');
+            document.getElementById('game-selection').classList.remove('hidden');
+            document.getElementById('game-selection').classList.add('fade-in');
+            
+            const categoryNames = {
+                role: 'Giochi di Ruolo',
+                board: 'Giochi da Tavolo'
             };
-            breadcrumbContent.innerHTML = navigationHistory.map((step, index) => {
-                const isLast = index === navigationHistory.length - 1;
-                return `<span class="${isLast ? 'text-yellow-300 font-semibold' : 'text-white/70'}">${steps[step]}</span>`;
-            }).join(' <span class="text-white/50">→</span> ');
-        } else {
-            breadcrumb.classList.add('hidden');
+            document.getElementById('game-selection-title').textContent = categoryNames[category];
+            
+            const gamesGrid = document.getElementById('games-grid');
+            gamesGrid.innerHTML = '';
+            gameData[category].forEach(game => {
+                const gameButton = document.createElement('button');
+                gameButton.className = 'bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105';
+                gameButton.onclick = () => selectGame(game.name);
+                gameButton.innerHTML = `
+                    <div class="text-3xl mb-2">${game.emoji}</div>
+                    <div class="font-semibold mb-1">${game.name}</div>
+                    <div class="text-sm opacity-75">${game.players} giocatori</div>
+                `;
+                gamesGrid.appendChild(gameButton);
+            });
         }
-    }
-    function getCategoryName(category) {
-        const names = {
-            role: 'Giochi di Ruolo',
-            board: 'Giochi da Tavolo'
-        };
-        return names[category] || category;
-    }
-    async function displayCurrentBookings() {
-        const container = document.getElementById('current-bookings');
-        container.innerHTML = '<p class="text-white/70 text-center">Caricamento prenotazioni...</p>';
-
-        try {
-            const { data: bookings, error } = await supabase
-                .from('bookings')
-                .select('*');
-
-            if (error) {
-                console.error("Errore nel recupero prenotazioni da Supabase:", error.message);
-                container.innerHTML = `<p class="text-red-300 text-center">Errore nel caricamento: ${error.message}</p>`;
+        function selectGame(gameName) {
+            currentBooking.game = gameName;
+            currentBooking.step = 'booking';
+            navigationHistory.push('booking');
+            
+            showBookingForm();
+            updateBreadcrumb();
+        }
+        function showBookingForm() {
+            document.getElementById('game-selection').classList.add('hidden');
+            document.getElementById('booking-form').classList.remove('hidden');
+            document.getElementById('booking-form').classList.add('fade-in');
+            
+            const campaignTypeDiv = document.getElementById('campaign-type-selection');
+            if (currentBooking.category === 'role') {
+                campaignTypeDiv.classList.remove('hidden');
+            } else {
+                campaignTypeDiv.classList.add('hidden');
+            }
+            
+            document.getElementById('selected-game').textContent = currentBooking.game;
+            document.getElementById('selected-date').textContent = getNextFridayEventTime().toLocaleDateString('it-IT', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+        function selectCampaignType(type) {
+            document.getElementById('campaign-type').value = type;
+            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
+            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
+            if (type === 'oneshot') {
+                document.getElementById('oneshot-btn').classList.add('bg-green-500', 'border-green-400');
+            } else {
+                document.getElementById('campaign-btn').classList.add('bg-green-500', 'border-green-400');
+            }
+        }
+        async function submitBooking(event) {
+            event.preventDefault();
+            const campaignTypeField = document.getElementById('campaign-type');
+            const campaignType = campaignTypeField ? campaignTypeField.value : null;
+            const booking = {
+            if (currentBooking.category === 'role' && !campaignType) {
+                alert('Seleziona il tipo di sessione.');
                 return;
             }
-
-            if (bookings.length === 0) {
-                container.innerHTML = '<p class="text-white/70 text-center">Nessuna prenotazione attiva</p>';
-                return;
+                id: crypto.randomUUID(),
+                category: currentBooking.category,
+                game: currentBooking.game,
+                playerName: document.getElementById('player-name').value,
+                notes: document.getElementById('notes').value,
+                campaignType: campaignType,
+                date: getNextFridayEventTime().toISOString(),
+                timestamp: new Date().toISOString(),
+                isPermanent: campaignType === 'campaign'
+            };
+            try {
+                const { data, error } = await supabase
+                    .from('bookings')
+                    .insert([booking]);
+                if (error) {
+                    console.error("Errore durante la prenotazione con Supabase:", error.message);
+                    alert('Errore durante la prenotazione: ' + error.message);
+                } else {
+                    showSuccessMessage(booking);
+                    await displayCurrentBookings();
+                }
+            } catch (error) {
+                    alert('Impossibile connettersi al server per la prenotazione: ' + error.message);
+                    console.error("Errore di rete o server (Supabase):", error);
             }
+        }
+        function showSuccessMessage(booking) {
+            document.getElementById('booking-form').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+            document.getElementById('success-message').classList.add('fade-in');
+            
+            document.getElementById('booking-details').innerHTML = `
+                <p><strong>Gioco:</strong> ${booking.game}</p>
+                <p><strong>Nome:</strong> ${booking.playerName}</p>
+                ${booking.campaignType ? `<p><strong>Tipo:</strong> ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}</p>` : ''}
+                <p><strong>ID Prenotazione:</strong> #${booking.id}</p>
+            `;
+            document.getElementById('breadcrumb').classList.add('hidden');
+        }
+        function resetBooking() {
+            currentBooking = {
+                category: '',
+                game: '',
+                time: '',
+                step: 'category'
+            };
+            navigationHistory = ['category'];
+            
+            document.getElementById('success-message').classList.add('hidden');
+            document.getElementById('category-selection').classList.remove('hidden');
+            document.getElementById('category-selection').classList.add('fade-in');
+            
+            document.getElementById('player-name').value = '';
+            document.getElementById('notes').value = '';
+            document.getElementById('campaign-type').value = '';
+            
+            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
+            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
+            document.getElementById('breadcrumb').classList.add('hidden');
+            
+            updateBreadcrumb();
+        }
+        function goBack() {
+            if (navigationHistory.length > 1) {
+                navigationHistory.pop();
+                const previousStep = navigationHistory[navigationHistory.length - 1];
+                
+                document.getElementById('category-selection').classList.add('hidden');
+                document.getElementById('game-selection').classList.add('hidden');
+                document.getElementById('booking-form').classList.add('hidden');
+                
+                if (previousStep === 'category') {
+                    document.getElementById('category-selection').classList.remove('hidden');
+                    currentBooking.step = 'category';
+                } else if (previousStep === 'game') {
+                    showGameSelection(currentBooking.category);
+                    currentBooking.step = 'game';
+                }
+                
+                updateBreadcrumb();
+            }
+        }
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const breadcrumbContent = document.getElementById('breadcrumb-content');
+            
+            if (navigationHistory.length > 1) {
+                breadcrumb.classList.remove('hidden');
+                const steps = {
+                    category: '🏠 Categorie',
+                    game: `🎮 ${currentBooking.category ? getCategoryName(currentBooking.category) : 'Giochi'}`,
+                    booking: '📝 Prenotazione'
+                };
+                breadcrumbContent.innerHTML = navigationHistory.map((step, index) => {
+                    const isLast = index === navigationHistory.length - 1;
+                    return `<span class="${isLast ? 'text-yellow-300 font-semibold' : 'text-white/70'}">${steps[step]}</span>`;
+                }).join(' <span class="text-white/50">→</span> ');
+            } else {
+                breadcrumb.classList.add('hidden');
+            }
+        }
+        function getCategoryName(category) {
+            const names = {
+                role: 'Giochi di Ruolo',
+                board: 'Giochi da Tavolo'
+            };
+            return names[category] || category;
+        }
+        async function displayCurrentBookings() {
+            const container = document.getElementById('current-bookings');
+            container.innerHTML = '<p class="text-white/70 text-center">Caricamento prenotazioni...</p>';
 
-            container.innerHTML = bookings.map(booking => `
-                <div class="bg-white/10 rounded-lg p-4 flex justify-between items-center" data-booking-id="${booking.id}">
-                    <div class="text-white">
-                        <div class="font-semibold">${booking.game}</div>
-                        <div class="text-sm opacity-75">${booking.playerName}${booking.campaignType ? ` • ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}` : ''}</div>
+            try {
+                const { data: bookings, error } = await supabase
+                    .from('bookings')
+                    .select('*');
+
+                if (error) {
+                    console.error("Errore nel recupero prenotazioni da Supabase:", error.message);
+                    container.innerHTML = `<p class="text-red-300 text-center">Errore nel caricamento: ${error.message}</p>`;
+                    return;
+                }
+
+                if (bookings.length === 0) {
+                    container.innerHTML = '<p class="text-white/70 text-center">Nessuna prenotazione attiva</p>';
+                    return;
+                }
+
+                container.innerHTML = bookings.map(booking => `
+                    <div class="bg-white/10 rounded-lg p-4 flex justify-between items-center" data-booking-id="${booking.id}">
+                        <div class="text-white">
+                            <div class="font-semibold">${booking.game}</div>
+                            <div class="text-sm opacity-75">${booking.playerName}${booking.campaignType ? ` • ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}` : ''}</div>
+                        </div>
+                        <button onclick="cancelBooking('${booking.id}')" class="text-red-300 hover:text-red-200 transition-colors text-xl px-2 py-1 rounded hover:bg-red-500/20">
+                            ❌
+                        </button>
                     </div>
-                    <button onclick="cancelBooking('${booking.id}')" class="text-red-300 hover:text-red-200 transition-colors text-xl px-2 py-1 rounded hover:bg-red-500/20">
-                        ❌
-                    </button>
-                </div>
-            `).join('');
-        } catch (error) {
-            console.error("Errore generico nel recupero delle prenotazioni da Supabase:", error);
-            container.innerHTML = '<p class="text-red-300 text-center">Impossibile caricare le prenotazioni. Riprova più tardi.</p>';
+                `).join('');
+            } catch (error) {
+                console.error("Errore generico nel recupero delle prenotazioni da Supabase:", error);
+                container.innerHTML = '<p class="text-red-300 text-center">Impossibile caricare le prenotazioni. Riprova più tardi.</p>';
+            }
         }
-    }
-    async function cancelBooking(bookingId) {
-        const numericId = bookingId;
-        const bookingElement = document.querySelector(`[data-booking-id="${bookingId}"]`);
-        if (bookingElement) {
-            bookingElement.style.transition = 'all 0.5s ease-out';
-            bookingElement.style.opacity = '0';
-            bookingElement.style.transform = 'translateX(-100px)';
-            setTimeout(async () => {
-                try {
-                    const { error } = await supabase
-                        .from('bookings')
-                        .delete()
-                        .eq('id', bookingId);
-                    if (error) {
-                        console.error("Errore durante la cancellazione con Supabase:", error.message);
-                        alert('Errore durante la cancellazione: ' + error.message);
+        async function cancelBooking(bookingId) {
+            const numericId = bookingId;
+            const bookingElement = document.querySelector(`[data-booking-id="${bookingId}"]`);
+            if (bookingElement) {
+                bookingElement.style.transition = 'all 0.5s ease-out';
+                bookingElement.style.opacity = '0';
+                bookingElement.style.transform = 'translateX(-100px)';
+                setTimeout(async () => {
+                    try {
+                        const { error } = await supabase
+                            .from('bookings')
+                            .delete()
+                            .eq('id', bookingId);
+                        if (error) {
+                            console.error("Errore durante la cancellazione con Supabase:", error.message);
+                            alert('Errore durante la cancellazione: ' + error.message);
+                            bookingElement.style.opacity = '1';
+                            bookingElement.style.transform = 'translateX(0)';
+                        } else {
+                            await displayCurrentBookings();
+                        }
+                    } catch (error) {
+                        console.error("Errore di rete o server (Supabase) durante la cancellazione:", error);
+                        alert('Impossibile connettersi al server per la cancellazione.');
                         bookingElement.style.opacity = '1';
                         bookingElement.style.transform = 'translateX(0)';
-                    } else {
-                        await displayCurrentBookings();
                     }
-                } catch (error) {
-                    console.error("Errore di rete o server (Supabase) durante la cancellazione:", error);
-                    alert('Impossibile connettersi al server per la cancellazione.');
-                    bookingElement.style.opacity = '1';
-                    bookingElement.style.transform = 'translateX(0)';
-                }
-            }, 500);
+                }, 500);
+            }
         }
-    }
-    document.addEventListener('DOMContentLoaded', init);
-</script>
-    </body>
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
 </html>
