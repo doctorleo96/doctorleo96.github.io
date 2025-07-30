@@ -158,6 +158,7 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE';
         
         // Inizializza il client Supabase.
+        // Useremo 'supabaseClient' per la tua istanza, per evitare conflitti di nomi con l'oggetto globale 'supabase' della CDN.
         const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
         // ********* VARIABILI GLOBALI *********
@@ -431,7 +432,7 @@
                 };
 
                 try {
-                    const { data, error } = await supabase
+                    const { data, error } = await supabaseClient
                         .from('bookings')
                         .insert([booking]);
                     if (error) {
@@ -451,7 +452,7 @@
         async function joinBooking(bookingId, playerName) {
             try {
                 // Recupera la prenotazione esistente
-                const { data: existingBooking, error: fetchError } = await supabase
+                const { data: existingBooking, error: fetchError } = await supabaseClient
                     .from('bookings')
                     .select('players, game, category, campaignType')
                     .eq('id', bookingId)
@@ -472,7 +473,7 @@
 
                 const updatedPlayers = [...currentPlayers, playerName];
 
-                const { data, error: updateError } = await supabase
+                const { data, error: updateError } = await supabaseClient
                     .from('bookings')
                     .update({ players: updatedPlayers })
                     .eq('id', bookingId);
@@ -601,7 +602,7 @@
             container.innerHTML = '<p class="text-white/70 text-center">Caricamento prenotazioni...</p>';
 
             try {
-                const { data: bookings, error } = await supabase
+                const { data: bookings, error } = await supabaseClient
                     .from('bookings')
                     .select('*');
 
@@ -652,7 +653,7 @@
             currentBooking.bookingIdToJoin = bookingId;
             navigationHistory.push('booking');
 
-            supabase
+            supabaseClient
                 .from('bookings')
                 .select('*')
                 .eq('id', bookingId)
@@ -681,7 +682,7 @@
                 bookingElement.style.transform = 'translateX(-100px)';
                 setTimeout(async () => {
                     try {
-                        const { error } = await supabase
+                        const { error } = await supabaseClient
                             .from('bookings')
                             .delete()
                             .eq('id', bookingId);
