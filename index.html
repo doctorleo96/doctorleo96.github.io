@@ -1,305 +1,49 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prenotazioni Giochi Venerdì Sera</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
-        
-        /* Stili CSS esistenti */
-        .tree-line { position: relative; }
-        .tree-line::before {
-            content: ''; position: absolute; left: -20px; top: 50%;
-            width: 15px; height: 2px; background: #6366f1;
-        }
-        .tree-branch::before {
-            content: ''; position: absolute; left: -20px; top: 0;
-            width: 2px; height: 100%; background: #6366f1;
-        }
-        .fade-in { animation: fadeIn 0.5s ease-in; }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .pulse-animation { animation: pulse 2s infinite; }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-    </style>
-</head>
-<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 min-h-screen">
-    <div class="container mx-auto px-4 py-8">
-        <div class="text-center mb-12">
-            <h1 class="text-5xl font-bold text-white mb-4">🎮 Prenotazioni Venerdì Sera</h1>
-            <div id="countdown" class="text-xl text-indigo-200 mb-6"></div>
-            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 inline-block">
-                <p class="text-white">Prossimo reset: <span id="next-reset" class="font-semibold text-yellow-300"></span></p>
-            </div>
-        </div>
-
-        <div id="breadcrumb" class="mb-8 hidden">
-            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
-                <div class="flex items-center space-x-2 text-white" id="breadcrumb-content">
-                    </div>
-            </div>
-        </div>
-
-        <div class="max-w-4xl mx-auto">
-            <div id="main-content" class="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl">
-                <div id="category-selection" class="fade-in">
-                    <h2 class="text-3xl font-semibold text-white mb-8 text-center">Scegli la Categoria di Gioco</h2>
-                    <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                        <a href="javascript:void(0);" onclick="selectCategory('role')" class="category-btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
-                            <div class="text-4xl mb-3">🐉</div>
-                            <h3 class="text-xl font-semibold mb-2">Giochi di Ruolo</h3>
-                            <p class="text-red-100">D&D, Call of Cthulhu, Warhammer e altri</p>
-                        </a>
-                        <a href="javascript:void(0);" onclick="selectCategory('board')" class="category-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
-                            <div class="text-4xl mb-3">🎲</div>
-                            <h3 class="text-xl font-semibold mb-2">Giochi da Tavolo</h3>
-                            <p class="text-blue-100">Strategia, cooperativi e classici</p>
-                        </a>
-                    </div>
-                </div>
-
-                <div id="game-selection" class="hidden">
-                    <div class="flex items-center mb-6">
-                        <button onclick="goBack()" class="text-white hover:text-yellow-300 transition-colors mr-4">
-                            ← Indietro
-                        </button>
-                        <h2 id="game-selection-title" class="text-3xl font-semibold text-white">Scegli il Gioco</h2>
-                    </div>
-                    <div id="games-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        </div>
-                </div>
-
-                <div id="booking-form" class="hidden">
-                    <div class="flex items-center mb-6">
-                        <button onclick="goBack()" class="text-white hover:text-yellow-300 transition-colors mr-4">
-                            ← Indietro
-                        </button>
-                        <h2 class="text-3xl font-semibold text-white">Completa la Prenotazione</h2>
-                    </div>
-                    
-                    <div class="bg-white/10 rounded-lg p-6 mb-6">
-                        <h3 class="text-xl font-semibold text-white mb-4">Riepilogo Prenotazione</h3>
-                        <div class="space-y-2 text-white">
-                            <p><span class="font-semibold">Gioco:</span> <span id="selected-game"></span></p>
-                            <p><span class="font-semibold">Data:</span> <span id="selected-date"></span></p>
-                        </div>
-                    </div>
-
-                    <form onsubmit="submitBooking(event)" class="space-y-6">
-                        <div>
-                            <label class="block text-white font-semibold mb-2">Nome Completo</label>
-                            <input type="text" id="player-name" required class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none">
-                        </div>
-                        
-                        <div id="campaign-type-selection" class="hidden">
-                            <label class="block text-white font-semibold mb-2">Tipo di Sessione</label>
-                            <div class="grid grid-cols-2 gap-4">
-                                <a href="javascript:void(0);" onclick="selectCampaignType('oneshot')" id="oneshot-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
-                                    <div class="text-2xl mb-2">🎯</div>
-                                    <div class="font-semibold">One Shot</div>
-                                    <div class="text-sm opacity-75">Sessione singola</div>
-                                </a>
-                                <a href="javascript:void(0);" onclick="selectCampaignType('campaign')" id="campaign-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
-                                    <div class="text-2xl mb-2">📚</div>
-                                    <div class="font-semibold">Campagna</div>
-                                    <div class="text-sm opacity-75">Sessioni ricorrenti</div>
-                                </a>
-                            </div>
-                            <input type="hidden" id="campaign-type">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-white font-semibold mb-2">Note Aggiuntive (opzionale)</label>
-                            <textarea id="notes" rows="3" class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none" placeholder="Eventuali richieste speciali..."></textarea>
-                        </div>
-            
-                        <button type="submit" id="confirm-booking-btn" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            🎯 Conferma Prenotazione
-                        </button>
-                    </form>
-                </div>
-
-                <div id="success-message" class="hidden text-center">
-                    <div class="text-6xl mb-6">🎉</div>
-                    <h2 class="text-3xl font-bold text-white mb-4">Prenotazione Confermata!</h2>
-                    <div class="bg-white/10 rounded-lg p-6 mb-6">
-                        <div id="booking-details" class="text-white space-y-2">
-                            </div>
-                    </div>
-                    <button onclick="resetBooking()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300">
-                        Nuova Prenotazione
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="max-w-4xl mx-auto mt-8">
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-2xl">
-                <h3 class="text-2xl font-semibold text-white mb-4">Prenotazioni Attive</h3>
-                <div id="current-bookings" class="space-y-3">
-                    </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script>
+        // *** TEST TEMPORANEO ***
+        function testFunction() {
+            console.log("testFunction è definita e chiamata!");
+            alert("Test Funziona!");
+        }
+
+        // Chiamala subito per vedere se il JavaScript si esegue
+        testFunction(); 
+
+        // Tutto il resto del tuo codice dovrebbe essere commentato per ora:
+        /*
         // Configurazione Supabase
-        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; // Il tuo URL Supabase
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; // La tua chiave anon Supabase
+        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE';
         
-        // Inizializza il client Supabase.
-        // Importante: 'supabase' (a sinistra) è il nome della variabile che userai.
-        // 'supabase.createClient' (a destra) è il metodo disponibile dalla libreria che hai importato.
         const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // ********* VARIABILI GLOBALI (DICHIARATE QUI PER PRIMA) *********
-        let currentBooking = {
-            category: '',
-            game: '',
-            time: '',
-            step: 'category',
-            bookingIdToJoin: null
-        };
-        let navigationHistory = ['category'];
-        // ********* FINE DELLE VARIABILI GLOBALI *********
+        let currentBooking = { ... };
+        let navigationHistory = [...];
 
-        // Funzione di inizializzazione che viene chiamata al caricamento del DOM
-        async function init() {
-            updateCountdown();
-            await displayCurrentBookings();
-            setInterval(updateCountdown, 1000);
-        }
+        async function init() { ... }
+        const gameData = { ... };
+        function getNextFridayResetTime() { ... }
+        function getNextFridayEventTime() { ... }
+        function updateCountdown() { ... }
+        function selectCategory(category) { ... }
+        function showGameSelection(category) { ... }
+        function selectGame(gameName) { ... }
+        function showBookingForm(bookingToJoin = null) { ... }
+        function selectCampaignType(type) { ... }
+        async function submitBooking(event) { ... }
+        async function joinBooking(bookingId, playerName) { ... }
+        function showSuccessMessage(booking, isJoin = false) { ... }
+        function resetBooking() { ... }
+        function goBack() { ... }
+        function updateBreadcrumb() { ... }
+        function getCategoryName(category) { ... }
+        async function displayCurrentBookings() { ... }
+        function promptJoinBooking(bookingId, gameName, category) { ... }
+        async function cancelBooking(bookingId) { ... }
 
-        // Struttura dati dei giochi (rimossi minPlayers e maxPlayers)
-        const gameData = {
-            role: [
-                { name: 'Dungeons & Dragons 5e', emoji: '🐉', players: '3-6' },
-                { name: 'Call of Cthulhu', emoji: '🐙', players: '3-6' },
-                { name: 'Warhammer 40k RPG', emoji: '⚡', players: '3-6' },
-                { name: 'Altri Giochi di Ruolo', emoji: '🎭', players: '2-8' }
-            ],
-            board: [
-                { name: 'CADUTA LIBERA', emoji: '🪂', players: '2-6' },
-                { name: 'DECKTECTIVE ROSE ROSSO SANGUE', emoji: '🌹', players: '1-6' },
-                { name: 'DECKTECTIVE INCUBO ALLO SPECCHIO', emoji: '🪞', players: '1-6' },
-                { name: 'LAS VEGAS ROYALE', emoji: '🎰', players: '2-5' },
-                { name: 'ALIEN IL DESTINO DELLA NOSTROMO', emoji: '👽', players: '1-5' },
-                { name: 'MINECRAFT HEROES OF VILLAGE', emoji: '⛏️', players: '2-4' },
-                { name: 'VILLAINOUS INTRODUCTION TO EVIL', emoji: '😈', players: '2-6' },
-                { name: 'VILLAINS THE CARD GAME', emoji: '🃏', players: '2-4' },
-                { name: 'LICANTROPO PRIMA LUCE', emoji: '🌅', players: '5-10' },
-                { name: 'LICANTROPO LUNA PIENA', emoji: '🌕', players: '5-10' },
-                { name: 'WHAT DO YOU MEAN', emoji: '❓', players: '3-8' },
-                { name: 'FUN LAND', emoji: '🎡', players: '2-4' },
-                { name: 'TICKET TO RIDE', emoji: '🚂', players: '2-5' },
-                { name: 'CORTEX', emoji: '🧠', players: '2-6' },
-                { name: 'EXPLODING KITTENS', emoji: '💥', players: '2-5' },
-                { name: 'JUNGLE SPEED', emoji: '🐆', players: '3-8' },
-                { name: 'PANDEMIC', emoji: '🦠', players: '2-4' },
-                { name: 'UNO', emoji: '🔴', players: '2-10' },
-                { name: 'SPLENDOR', emoji: '💎', players: '2-4' },
-                { name: 'COUNCIL SHADOWS', emoji: '🏛️', players: '2-5' },
-                { name: 'KINGDOMINO', emoji: '👑', players: '2-4' },
-                { name: '7 WONDERS', emoji: '🏛️', players: '2-7' },
-                { name: 'FUNNY FARMER', emoji: '🚜', players: '2-4' },
-                { name: 'SCOTLAND YARD', emoji: '🕵️', players: '3-6' },
-                { name: 'DERNIER UNO SOLO', emoji: '🎯', players: '2-8' },
-                { name: 'AZUL', emoji: '🎨', players: '2-4' },
-                { name: 'BONSAI', emoji: '🌳', players: '1-4' },
-                { name: 'IST DA WER', emoji: '🤔', players: '3-6' },
-                { name: 'MIRAKEL MIX', emoji: '✨', players: '2-5' },
-                { name: 'BANG', emoji: '🔫', players: '4-7' },
-                { name: 'LUPUS IN TABULA', emoji: '🐺', players: '8-24' },
-                { name: 'LEO VA DAL BARBIERE', emoji: '✂️', players: '2-5' },
-                { name: 'KAKURO', emoji: '🔢', players: '1-4' },
-                { name: 'ON THE ROAD', emoji: '🛣️', players: '2-6' },
-                { name: 'COLORETTO', emoji: '🎨', players: '3-5' },
-                { name: 'DECKSCAPE', emoji: '🗝️', players: '1-6' },
-                { name: 'SHERLOCK HOLMES CONSULENTE', emoji: '🔍', players: '1-8' },
-                { name: 'PARTY LINES', emoji: '📞', players: '4-8' },
-                { name: 'PLAGIO', emoji: '📚', players: '3-8' },
-                { name: 'FRESH FRUITS', emoji: '🍎', players: '2-5' },
-                { name: 'I BUONI E I CATTIVI FANTASMI', emoji: '👻', players: '2-4' },
-                { name: 'CARTAGENA', emoji: '🏴‍☠️', players: '2-5' },
-                { name: 'PASSA LA BOMBA', emoji: '💣', players: '2-12' },
-                { name: 'DIXIT', emoji: '🎭', players: '3-8' },
-                { name: 'MYSTERIUM', emoji: '🔮', players: '2-7' },
-                { name: 'LAMA', emoji: '🦙', players: '2-6' },
-                { name: 'UNSTABLE UNICORNS', emoji: '🦄', players: '2-8' },
-                { name: 'SILVER MINE', emoji: '⛏️', players: '3-6' },
-                { name: 'COYOTE', emoji: '🐺', players: '3-6' },
-                { name: 'DIXIT MIRRORS', emoji: '🪞', players: '3-8' },
-                { name: 'CARCASSONNE', emoji: '🏰', players: '2-5' },
-                { name: 'SABOTEUR', emoji: '⛏️', players: '3-10' },
-                { name: 'PALEO', emoji: '🦕', players: '1-4' },
-                { name: 'STONE AGE', emoji: '🗿', players: '2-4' },
-                { name: 'INKOGNITO', emoji: '🎭', players: '3-5' },
-                { name: 'KALEIDOS', emoji: '🔍', players: '2-12' },
-                { name: 'ACCIPICCHIA', emoji: '😲', players: '2-8' },
-                { name: 'VENICE CONNECTION', emoji: '🚤', players: '2-6' },
-                { name: 'FANTASCATTI', emoji: '👻', players: '2-8' },
-                { name: 'DOBBLE', emoji: '👁️', players: '2-8' },
-                { name: 'BARKING KITTENS', emoji: '🐱', players: '2-5' },
-                { name: 'OVERBOOKING', emoji: '✈️', players: '2-5' },
-                { name: 'LE LEGGENDE DI ANDOR', emoji: '⚔️', players: '2-4' },
-                { name: 'CATAN', emoji: '🏝️', players: '3-4' },
-                { name: 'CAN\'T STOP', emoji: '🎲', players: '2-4' },
-                { name: 'PICCHIATELLO', emoji: '🤪', players: '2-6' }
-            ]
-        };
-
-        // Funzioni per la gestione delle date e del countdown
-        function getNextFridayResetTime() {
-            const now = new Date();
-            const targetResetHour = 20;
-            let nextFriday = new Date(now);
-            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
-            nextFriday.setDate(now.getDate() + daysUntilFriday);
-            nextFriday.setHours(targetResetHour, 0, 0, 0);
-            if (now.getDay() === 5 && now.getHours() >= targetResetHour) {
-                nextFriday.setDate(nextFriday.getDate() + 7);
-            }
-            return nextFriday;
-        }
-
-        function getNextFridayEventTime() {
-            const now = new Date();
-            const nextFriday = new Date();
-            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
-            if (daysUntilFriday === 0 && now.getDay() === 5) {
-                if (now.getHours() < 23 || (now.getHours() === 23 && now.getMinutes() < 59)) {
-                    nextFriday.setHours(23, 59, 59, 999);
-                } else {
-                    nextFriday.setDate(now.getDate() + 7);
-                    nextFriday.setHours(23, 59, 59, 999);
-                }
-            } else {
-                nextFriday.setDate(now.getDate() + (daysUntilFriday || 7));
-                nextFriday.setHours(23, 59, 59, 999);
-            }
-            return nextFriday;
-        }
-
-        function updateCountdown() {
-            const now = new Date();
-            const nextFridayEvent = getNextFridayEventTime();
-            const timeUntil = nextFridayEvent - now;
-            if (timeUntil > 0) {
-                const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000);
-                document.getElementById('countdown').innerHTML =
-                    `⏰ Tempo rimanente: ${days}g ${hours}h ${minutes}m ${seconds}s`;
-            } else {
-                document.getElementById('
+        document.addEventListener('DOMContentLoaded', init);
+        */
+    </script>
+</body>
+</html>
