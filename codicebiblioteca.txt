@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prenotazioni Giochi Venerdì Sera</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        .tree-line {
+            position: relative;
+        }
+        
+        .tree-line::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            width: 15px;
+            height: 2px;
+            background: #6366f1;
+        }
+        
+        .tree-branch::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #6366f1;
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold text-white mb-4">🎮 Prenotazioni Venerdì Sera</h1>
+            <div id="countdown" class="text-xl text-indigo-200 mb-6"></div>
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 inline-block">
+                <p class="text-white">Prossimo reset: <span id="next-reset" class="font-semibold text-yellow-300"></span></p>
+            </div>
+        </div>
+
+        <!-- Navigation Breadcrumb -->
+        <div id="breadcrumb" class="mb-8 hidden">
+            <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
+                <div class="flex items-center space-x-2 text-white" id="breadcrumb-content">
+                    <!-- Breadcrumb will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="max-w-4xl mx-auto">
+            <div id="main-content" class="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl">
+                <!-- Initial Category Selection -->
+                <div id="category-selection" class="fade-in">
+                    <h2 class="text-3xl font-semibold text-white mb-8 text-center">Scegli la Categoria di Gioco</h2>
+                    <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+                        <button onclick="selectCategory('role')" class="category-btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <div class="text-4xl mb-3">🐉</div>
+                            <h3 class="text-xl font-semibold mb-2">Giochi di Ruolo</h3>
+                            <p class="text-red-100">D&D, Call of Cthulhu, Warhammer e altri</p>
+                        </button>
+                        
+                        <button onclick="selectCategory('board')" class="category-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            <div class="text-4xl mb-3">🎲</div>
+                            <h3 class="text-xl font-semibold mb-2">Giochi da Tavolo</h3>
+                            <p class="text-blue-100">Strategia, cooperativi e classici</p>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game Selection (Hidden initially) -->
+                <div id="game-selection" class="hidden">
+                    <div class="flex items-center mb-6">
+                        <button onclick="goBack()" class="text-white hover:text-yellow-300 transition-colors mr-4">
+                            ← Indietro
+                        </button>
+                        <h2 id="game-selection-title" class="text-3xl font-semibold text-white">Scegli il Gioco</h2>
+                    </div>
+                    <div id="games-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Games will be populated by JavaScript -->
+                    </div>
+                </div>
+
+
+
+                <!-- Booking Form (Hidden initially) -->
+                <div id="booking-form" class="hidden">
+                    <div class="flex items-center mb-6">
+                        <button onclick="goBack()" class="text-white hover:text-yellow-300 transition-colors mr-4">
+                            ← Indietro
+                        </button>
+                        <h2 class="text-3xl font-semibold text-white">Completa la Prenotazione</h2>
+                    </div>
+                    
+                    <div class="bg-white/10 rounded-lg p-6 mb-6">
+                        <h3 class="text-xl font-semibold text-white mb-4">Riepilogo Prenotazione</h3>
+                        <div class="space-y-2 text-white">
+                            <p><span class="font-semibold">Gioco:</span> <span id="selected-game"></span></p>
+                            <p><span class="font-semibold">Data:</span> <span id="selected-date"></span></p>
+                        </div>
+                    </div>
+
+                    <form onsubmit="submitBooking(event)" class="space-y-6">
+                        <div>
+                            <label class="block text-white font-semibold mb-2">Nome Completo</label>
+                            <input type="text" id="player-name" required class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none">
+                        </div>
+                        
+                        <div id="campaign-type-selection" class="hidden">
+                            <label class="block text-white font-semibold mb-2">Tipo di Sessione</label>
+                            <div class="grid grid-cols-2 gap-4">
+                                <button type="button" onclick="selectCampaignType('oneshot')" id="oneshot-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30">
+                                    <div class="text-2xl mb-2">🎯</div>
+                                    <div class="font-semibold">One Shot</div>
+                                    <div class="text-sm opacity-75">Sessione singola</div>
+                                </button>
+                                <button type="button" onclick="selectCampaignType('campaign')" id="campaign-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30">
+                                    <div class="text-2xl mb-2">📚</div>
+                                    <div class="font-semibold">Campagna</div>
+                                    <div class="text-sm opacity-75">Sessioni ricorrenti</div>
+                                </button>
+                            </div>
+                            <input type="hidden" id="campaign-type" required>
+                        </div>
+                        
+
+                        
+                        <div>
+                            <label class="block text-white font-semibold mb-2">Note Aggiuntive (opzionale)</label>
+                            <textarea id="notes" rows="3" class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none" placeholder="Eventuali richieste speciali..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
+                            🎯 Conferma Prenotazione
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Success Message (Hidden initially) -->
+                <div id="success-message" class="hidden text-center">
+                    <div class="text-6xl mb-6">🎉</div>
+                    <h2 class="text-3xl font-bold text-white mb-4">Prenotazione Confermata!</h2>
+                    <div class="bg-white/10 rounded-lg p-6 mb-6">
+                        <div id="booking-details" class="text-white space-y-2">
+                            <!-- Booking details will be populated -->
+                        </div>
+                    </div>
+                    <button onclick="resetBooking()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300">
+                        Nuova Prenotazione
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Current Bookings -->
+        <div class="max-w-4xl mx-auto mt-8">
+            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-2xl">
+                <h3 class="text-2xl font-semibold text-white mb-4">Prenotazioni Attive</h3>
+                <div id="current-bookings" class="space-y-3">
+                    <!-- Current bookings will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+	
+    const API_URL = 'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLjmteAut0h9U2t1a5trjvuJVbiIQsw1OgG1i5SKE1uqaVnqpkYReiGp-R1SwFahns1r3tOvRGdjOMCNaDTnTSWXGPDbdOj8KOJMQnt8e_LWW9fAhTGV1Xk672pXmDjJesgz5mjQG-zOmYniljf1dIqT6d2hJVL2P8OJxnP2FO2EhXv0QdWn-0UTjLwxMNa4vif1iARvBFog_LlwWyU6b7jD2KBRR9eS01dQb2vaz96p8HcImM8Jr47JGgx9rGQyF2XHkRm4ERV8C2h5GSM810fvBXUSj8ZcHgdV5viK&lib=MGwOSlNGTE3AnM-rFjKUCQUMo_4PJtpLY'; // Sostituisci con l'URL che hai copiato da Apps Script [cite: 1]
+
+ 
+   async function init() {
+    updateCountdown();
+    await displayCurrentBookings();
+    setInterval(updateCountdown, 1000);
+
+    // Check for weekly reset from the server
+    await checkWeeklyReset();
+    setInterval(checkWeeklyReset, 60000); // Check every minute
+}
+
+        // Game data structure
+        const gameData = {
+            role: [
+                { name: 'Dungeons & Dragons 5e', emoji: '🐉', players: '3-6' },
+                { name: 'Call of Cthulhu', emoji: '🐙', players: '3-6' },
+                { name: 'Warhammer 40k RPG', emoji: '⚡', players: '3-6' },
+                { name: 'Altri Giochi di Ruolo', emoji: '🎭', players: '2-8' }
+            ],
+            board: [
+                { name: 'CADUTA LIBERA', emoji: '🪂', players: '2-6' },
+                { name: 'DECKTECTIVE ROSE ROSSO SANGUE', emoji: '🌹', players: '1-6' },
+                { name: 'DECKTECTIVE INCUBO ALLO SPECCHIO', emoji: '🪞', players: '1-6' },
+                { name: 'LAS VEGAS ROYALE', emoji: '🎰', players: '2-5' },
+                { name: 'ALIEN IL DESTINO DELLA NOSTROMO', emoji: '👽', players: '1-5' },
+                { name: 'MINECRAFT HEROES OF VILLAGE', emoji: '⛏️', players: '2-4' },
+                { name: 'VILLAINOUS INTRODUCTION TO EVIL', emoji: '😈', players: '2-6' },
+                { name: 'VILLAINS THE CARD GAME', emoji: '🃏', players: '2-4' },
+                { name: 'LICANTROPO PRIMA LUCE', emoji: '🌅', players: '5-10' },
+                { name: 'LICANTROPO LUNA PIENA', emoji: '🌕', players: '5-10' },
+                { name: 'WHAT DO YOU MEAN', emoji: '❓', players: '3-8' },
+                { name: 'FUN LAND', emoji: '🎡', players: '2-4' },
+                { name: 'TICKET TO RIDE', emoji: '🚂', players: '2-5' },
+                { name: 'CORTEX', emoji: '🧠', players: '2-6' },
+                { name: 'EXPLODING KITTENS', emoji: '💥', players: '2-5' },
+                { name: 'JUNGLE SPEED', emoji: '🐆', players: '3-8' },
+                { name: 'PANDEMIC', emoji: '🦠', players: '2-4' },
+                { name: 'UNO', emoji: '🔴', players: '2-10' },
+                { name: 'SPLENDOR', emoji: '💎', players: '2-4' },
+                { name: 'COUNCIL SHADOWS', emoji: '🏛️', players: '2-5' },
+                { name: 'KINGDOMINO', emoji: '👑', players: '2-4' },
+                { name: '7 WONDERS', emoji: '🏛️', players: '2-7' },
+                { name: 'FUNNY FARMER', emoji: '🚜', players: '2-4' },
+                { name: 'SCOTLAND YARD', emoji: '🕵️', players: '3-6' },
+                { name: 'DERNIER UNO SOLO', emoji: '🎯', players: '2-8' },
+                { name: 'AZUL', emoji: '🎨', players: '2-4' },
+                { name: 'BONSAI', emoji: '🌳', players: '1-4' },
+                { name: 'IST DA WER', emoji: '🤔', players: '3-6' },
+                { name: 'MIRAKEL MIX', emoji: '✨', players: '2-5' },
+                { name: 'BANG', emoji: '🔫', players: '4-7' },
+                { name: 'LUPUS IN TABULA', emoji: '🐺', players: '8-24' },
+                { name: 'LEO VA DAL BARBIERE', emoji: '✂️', players: '2-5' },
+                { name: 'KAKURO', emoji: '🔢', players: '1-4' },
+                { name: 'ON THE ROAD', emoji: '🛣️', players: '2-6' },
+                { name: 'COLORETTO', emoji: '🎨', players: '3-5' },
+                { name: 'DECKSCAPE', emoji: '🗝️', players: '1-6' },
+                { name: 'SHERLOCK HOLMES CONSULENTE', emoji: '🔍', players: '1-8' },
+                { name: 'PARTY LINES', emoji: '📞', players: '4-8' },
+                { name: 'PLAGIO', emoji: '📚', players: '3-8' },
+                { name: 'FRESH FRUITS', emoji: '🍎', players: '2-5' },
+                { name: 'I BUONI E I CATTIVI FANTASMI', emoji: '👻', players: '2-4' },
+                { name: 'CARTAGENA', emoji: '🏴‍☠️', players: '2-5' },
+                { name: 'PASSA LA BOMBA', emoji: '💣', players: '2-12' },
+                { name: 'DIXIT', emoji: '🎭', players: '3-8' },
+                { name: 'MYSTERIUM', emoji: '🔮', players: '2-7' },
+                { name: 'LAMA', emoji: '🦙', players: '2-6' },
+                { name: 'UNSTABLE UNICORNS', emoji: '🦄', players: '2-8' },
+                { name: 'SILVER MINE', emoji: '⛏️', players: '3-6' },
+                { name: 'COYOTE', emoji: '🐺', players: '3-6' },
+                { name: 'DIXIT MIRRORS', emoji: '🪞', players: '3-8' },
+                { name: 'CARCASSONNE', emoji: '🏰', players: '2-5' },
+                { name: 'SABOTEUR', emoji: '⛏️', players: '3-10' },
+                { name: 'PALEO', emoji: '🦕', players: '1-4' },
+                { name: 'STONE AGE', emoji: '🗿', players: '2-4' },
+                { name: 'INKOGNITO', emoji: '🎭', players: '3-5' },
+                { name: 'KALEIDOS', emoji: '🔍', players: '2-12' },
+                { name: 'ACCIPICCHIA', emoji: '😲', players: '2-8' },
+                { name: 'VENICE CONNECTION', emoji: '🚤', players: '2-6' },
+                { name: 'FANTASCATTI', emoji: '👻', players: '2-8' },
+                { name: 'DOBBLE', emoji: '👁️', players: '2-8' },
+                { name: 'BARKING KITTENS', emoji: '🐱', players: '2-5' },
+                { name: 'OVERBOOKING', emoji: '✈️', players: '2-5' },
+                { name: 'LE LEGGENDE DI ANDOR', emoji: '⚔️', players: '2-4' },
+                { name: 'CATAN', emoji: '🏝️', players: '3-4' },
+                { name: 'CAN\'T STOP', emoji: '🎲', players: '2-4' },
+                { name: 'PICCHIATELLO', emoji: '🤪', players: '2-6' }
+            ]
+        };
+
+        // Current booking state
+        let currentBooking = {
+            category: '',
+            game: '',
+            time: '',
+            step: 'category'
+        };
+
+        // Navigation history
+        let navigationHistory = ['category'];
+
+
+     
+
+        // Get next Friday at 20:00 (8 PM) for reset
+
+// Update countdown to next Friday (for the event, still at 23:59:59 as in your original code)
+// Se vuoi il countdown fino al venerdì sera in generale (23:59)
+// Get next Friday at 20:00 (8 PM) for reset
+function getNextFridayResetTime() {
+    const now = new Date();
+    const targetResetHour = 20; // 20:00 (8 PM)
+
+    let nextFriday = new Date(now);
+    // Calculate days until next Friday
+    const daysUntilFriday = (5 - now.getDay() + 7) % 7;
+    nextFriday.setDate(now.getDate() + daysUntilFriday);
+    nextFriday.setHours(targetResetHour, 0, 0, 0); // Set to 20:00
+
+    // If it's already Friday and past 20:00, the "next" reset is in 7 days
+    if (now.getDay() === 5 && now.getHours() >= targetResetHour) {
+        nextFriday.setDate(nextFriday.getDate() + 7);
+    }
+    return nextFriday;
+}
+
+// Update countdown to next Friday (for the event, still at 23:59:59 as in your original code)
+// Se vuoi il countdown fino al venerdì sera in generale (23:59)
+function getNextFridayEventTime() {
+    const now = new Date();
+    const nextFriday = new Date();
+    const daysUntilFriday = (5 - now.getDay() + 7) % 7;
+    if (daysUntilFriday === 0 && now.getDay() === 5) {
+        if (now.getHours() < 23 || (now.getHours() === 23 && now.getMinutes() < 59)) {
+            nextFriday.setHours(23, 59, 59, 999);
+        } else {
+            nextFriday.setDate(now.getDate() + 7);
+            nextFriday.setHours(23, 59, 59, 999);
+        }
+    } else {
+        nextFriday.setDate(now.getDate() + (daysUntilFriday || 7));
+        nextFriday.setHours(23, 59, 59, 999);
+    }
+    return nextFriday;
+}
+function updateCountdown() {
+    const now = new Date();
+    const nextFridayEvent = getNextFridayEventTime(); // Usa la funzione per l'evento
+    const timeUntil = nextFridayEvent - now;
+    if (timeUntil > 0) {
+        const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000);
+        document.getElementById('countdown').innerHTML =
+            `⏰ Tempo rimanente: ${days}g ${hours}h ${minutes}m ${seconds}s`;
+    } else {
+        document.getElementById('countdown').innerHTML = '🎮 È venerdì sera! Buon divertimento!';
+    }
+
+    // Display next reset time (if you want to show 20:00 for next reset)
+    document.getElementById('next-reset').textContent = getNextFridayResetTime().toLocaleDateString('it-IT', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+        // Get next Friday at 23:59
+       
+async function checkWeeklyReset() {
+    const now = new Date();
+    const nextFridayReset = getNextFridayResetTime(); // Ottieni l'ora di reset dal client
+    const lastLocalReset = localStorage.getItem('lastResetTriggered'); // Salva l'ultimo trigger locale
+
+    // Se l'ora attuale è dopo l'ora di reset e non è stato resettato in questa "finestra"
+    if (now > nextFridayReset && (!lastLocalReset || new Date(lastLocalReset) < nextFridayReset)) {
+        console.log("Tentativo di reset settimanale...");
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ action: 'resetBookings', lastResetTime: lastLocalReset }) // Invia l'ora dell'ultimo reset conosciuto
+            });
+            const data = await response.json();
+            if (data.status === 'success' && data.resetOccurred) {
+                console.log("Reset settimanale completato dal server.");
+                localStorage.setItem('lastResetTriggered', now.toISOString()); // Aggiorna il timestamp del trigger
+                await displayCurrentBookings(); // Ricarica le prenotazioni dopo il reset
+            } else {
+                console.log("Reset non necessario o non completato:", data.message);
+            }
+        } catch (error) {
+            console.error("Errore durante il reset settimanale:", error);
+        }
+    }
+}
+
+// `
+*/
+
+        // Reset weekly data
+       
+
+        // Select category
+        function selectCategory(category) {
+            currentBooking.category = category;
+            currentBooking.step = 'game';
+            navigationHistory.push('game');
+            
+            showGameSelection(category);
+            updateBreadcrumb();
+        }
+
+        // Show game selection
+        function showGameSelection(category) {
+            document.getElementById('category-selection').classList.add('hidden');
+            document.getElementById('game-selection').classList.remove('hidden');
+            document.getElementById('game-selection').classList.add('fade-in');
+            
+            const categoryNames = {
+                role: 'Giochi di Ruolo',
+                board: 'Giochi da Tavolo'
+            };
+            
+            document.getElementById('game-selection-title').textContent = categoryNames[category];
+            
+            const gamesGrid = document.getElementById('games-grid');
+            gamesGrid.innerHTML = '';
+            
+            gameData[category].forEach(game => {
+                const gameButton = document.createElement('button');
+                gameButton.className = 'bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105';
+                gameButton.onclick = () => selectGame(game.name);
+                gameButton.innerHTML = `
+                    <div class="text-3xl mb-2">${game.emoji}</div>
+                    <div class="font-semibold mb-1">${game.name}</div>
+                    <div class="text-sm opacity-75">${game.players} giocatori</div>
+                `;
+                gamesGrid.appendChild(gameButton);
+            });
+        }
+
+        // Select game
+        function selectGame(gameName) {
+            currentBooking.game = gameName;
+            currentBooking.step = 'booking';
+            navigationHistory.push('booking');
+            
+            showBookingForm();
+            updateBreadcrumb();
+        }
+
+        // Show booking form
+        function showBookingForm() {
+            document.getElementById('game-selection').classList.add('hidden');
+            document.getElementById('booking-form').classList.remove('hidden');
+            document.getElementById('booking-form').classList.add('fade-in');
+            
+            // Show campaign type selection only for role-playing games
+            const campaignTypeDiv = document.getElementById('campaign-type-selection');
+            if (currentBooking.category === 'role') {
+                campaignTypeDiv.classList.remove('hidden');
+            } else {
+                campaignTypeDiv.classList.add('hidden');
+            }
+            
+            // Populate summary
+            document.getElementById('selected-game').textContent = currentBooking.game;
+            document.getElementById('selected-date').textContent = getNextFridayEventTime().toLocaleDateString('it-IT', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        // Select campaign type
+        function selectCampaignType(type) {
+            document.getElementById('campaign-type').value = type;
+            
+            // Update button styles
+            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
+            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
+            
+            if (type === 'oneshot') {
+                document.getElementById('oneshot-btn').classList.add('bg-green-500', 'border-green-400');
+            } else {
+                document.getElementById('campaign-btn').classList.add('bg-green-500', 'border-green-400');
+            }
+        }
+
+      async function submitBooking(event) { // Rendi la funzione async
+    event.preventDefault();
+    const campaignTypeField = document.getElementById('campaign-type');
+    const campaignType = campaignTypeField ? campaignTypeField.value : null;
+
+    const booking = {
+        id: Date.now(), // ID univoco per la prenotazione
+        category: currentBooking.category,
+        game: currentBooking.game,
+        playerName: document.getElementById('player-name').value,
+        notes: document.getElementById('notes').value,
+        campaignType: campaignType,
+        date: getNextFridayEventTime().toISOString(), // Usa l'ora dell'evento
+        timestamp: new Date().toISOString(),
+        isPermanent: campaignType === 'campaign' // Le campagne sono permanenti
+    };
+
+    try {
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ action: 'addBooking', ...booking })
+        });
+        const data = await response.json();
+
+        if (data.status === 'success') {
+            showSuccessMessage(booking);
+            await displayCurrentBookings(); // Ricarica le prenotazioni dopo l'aggiunta
+        } else {
+            alert('Errore durante la prenotazione: ' + data.message);
+        }
+    } catch (error) {
+        console.error("Errore di rete o server:", error);
+        alert('Impossibile connettersi al server per la prenotazione.');
+    }
+}
+
+
+        // Show success message
+        function showSuccessMessage(booking) {
+            document.getElementById('booking-form').classList.add('hidden');
+            document.getElementById('success-message').classList.remove('hidden');
+            document.getElementById('success-message').classList.add('fade-in');
+            
+            document.getElementById('booking-details').innerHTML = `
+                <p><strong>Gioco:</strong> ${booking.game}</p>
+                <p><strong>Nome:</strong> ${booking.playerName}</p>
+                ${booking.campaignType ? `<p><strong>Tipo:</strong> ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}</p>` : ''}
+                <p><strong>ID Prenotazione:</strong> #${booking.id}</p>
+            `;
+            
+            document.getElementById('breadcrumb').classList.add('hidden');
+        }
+
+        // Reset booking
+        function resetBooking() {
+            currentBooking = {
+                category: '',
+                game: '',
+                time: '',
+                step: 'category'
+            };
+            navigationHistory = ['category'];
+            
+            document.getElementById('success-message').classList.add('hidden');
+            document.getElementById('category-selection').classList.remove('hidden');
+            document.getElementById('category-selection').classList.add('fade-in');
+            
+            // Reset form
+            document.getElementById('player-name').value = '';
+            document.getElementById('notes').value = '';
+            document.getElementById('campaign-type').value = '';
+            
+            // Reset campaign type buttons
+            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
+            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
+            
+            updateBreadcrumb();
+        }
+
+        // Go back
+        function goBack() {
+            if (navigationHistory.length > 1) {
+                navigationHistory.pop();
+                const previousStep = navigationHistory[navigationHistory.length - 1];
+                
+                // Hide all sections
+                document.getElementById('category-selection').classList.add('hidden');
+                document.getElementById('game-selection').classList.add('hidden');
+                document.getElementById('booking-form').classList.add('hidden');
+                
+                // Show appropriate section
+                if (previousStep === 'category') {
+                    document.getElementById('category-selection').classList.remove('hidden');
+                    currentBooking.step = 'category';
+                } else if (previousStep === 'game') {
+                    showGameSelection(currentBooking.category);
+                    currentBooking.step = 'game';
+                }
+                
+                updateBreadcrumb();
+            }
+        }
+
+        // Update breadcrumb
+        function updateBreadcrumb() {
+            const breadcrumb = document.getElementById('breadcrumb');
+            const breadcrumbContent = document.getElementById('breadcrumb-content');
+            
+            if (navigationHistory.length > 1) {
+                breadcrumb.classList.remove('hidden');
+                
+                const steps = {
+                    category: '🏠 Categorie',
+                    game: `🎮 ${currentBooking.category ? getCategoryName(currentBooking.category) : 'Giochi'}`,
+                    booking: '📝 Prenotazione'
+                };
+                
+                breadcrumbContent.innerHTML = navigationHistory.map((step, index) => {
+                    const isLast = index === navigationHistory.length - 1;
+                    return `<span class="${isLast ? 'text-yellow-300 font-semibold' : 'text-white/70'}">${steps[step]}</span>`;
+                }).join(' <span class="text-white/50">→</span> ');
+            } else {
+                breadcrumb.classList.add('hidden');
+            }
+        }
+
+        // Get category name
+        function getCategoryName(category) {
+            const names = {
+                role: 'Giochi di Ruolo',
+                board: 'Giochi da Tavolo'
+            };
+            return names[category] || category;
+        }
+
+        // Display current bookings
+        async function displayCurrentBookings() { // Rendi la funzione async
+    const container = document.getElementById('current-bookings');
+    container.innerHTML = '<p class="text-white/70 text-center">Caricamento prenotazioni...</p>'; // Messaggio di caricamento
+
+    try {
+        const response = await fetch(API_URL, { method: 'GET' });
+        const bookings = await response.json();
+
+        if (bookings.status === 'error') {
+            container.innerHTML = `<p class="text-red-300 text-center">Errore nel caricamento: ${bookings.message}</p>`;
+            return;
+        }
+
+        if (bookings.length === 0) {
+            container.innerHTML = '<p class="text-white/70 text-center">Nessuna prenotazione attiva</p>';
+            return;
+        }
+
+        container.innerHTML = bookings.map(booking => `
+            <div class="bg-white/10 rounded-lg p-4 flex justify-between items-center" data-booking-id="${booking.id}">
+                <div class="text-white">
+                    <div class="font-semibold">${booking.game}</div>
+                    <div class="text-sm opacity-75">${booking.playerName}${booking.campaignType ? ` • ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}` : ''}</div>
+                </div>
+                <button onclick="cancelBooking('${booking.id}')" class="text-red-300 hover:text-red-200 transition-colors text-xl px-2 py-1 rounded hover:bg-red-500/20">
+                    ❌
+                </button>
+            </div>
+        `).join('');
+    } catch (error) {
+        console.error("Errore nel recupero delle prenotazioni:", error);
+        container.innerHTML = '<p class="text-red-300 text-center">Impossibile caricare le prenotazioni. Riprova più tardi.</p>';
+    }
+}
+
+
+
+
+        async function cancelBooking(bookingId) { // Rendi la funzione async
+    const numericId = parseInt(bookingId); // Assicurati che sia un numero
+
+    // Trova l'elemento della prenotazione e aggiungi l'animazione di fade-out
+    const bookingElement = document.querySelector(`[data-booking-id="${bookingId}"]`);
+    if (bookingElement) {
+        bookingElement.style.transition = 'all 0.5s ease-out';
+        bookingElement.style.opacity = '0';
+        bookingElement.style.transform = 'translateX(-100px)';
+
+        // Aspetta che l'animazione sia completa prima di rimuovere dal server e ricaricare
+        setTimeout(async () => {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'cancelBooking', bookingId: numericId })
+                });
+                const data = await response.json();
+
+                if (data.status === 'success') {
+                    await displayCurrentBookings(); // Ricarica le prenotazioni dopo la cancellazione
+                } else {
+                    alert('Errore durante la cancellazione: ' + data.message);
+                    bookingElement.style.opacity = '1'; // Ripristina l'opacità se errore
+                    bookingElement.style.transform = 'translateX(0)';
+                }
+            } catch (error) {
+                console.error("Errore di rete o server durante la cancellazione:", error);
+                alert('Impossibile connettersi al server per la cancellazione.');
+                bookingElement.style.opacity = '1'; // Ripristina l'opacità se errore
+                bookingElement.style.transform = 'translateX(0)';
+            }
+        }, 500);
+    }
+}
+
+        // Initialize when page loads
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96747de1d75bed2f',t:'MTc1Mzg3NDY4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
