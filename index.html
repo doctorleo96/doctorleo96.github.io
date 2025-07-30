@@ -80,17 +80,19 @@
                 <div id="category-selection" class="fade-in">
                     <h2 class="text-3xl font-semibold text-white mb-8 text-center">Scegli la Categoria di Gioco</h2>
                     <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                        <button onclick="selectCategory('role')" class="category-btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <div class="text-4xl mb-3">🐉</div>
-                            <h3 class="text-xl font-semibold mb-2">Giochi di Ruolo</h3>
-                            <p class="text-red-100">D&D, Call of Cthulhu, Warhammer e altri</p>
-                        </button>
-                        
-                        <button onclick="selectCategory('board')" class="category-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <div class="text-4xl mb-3">🎲</div>
-                            <h3 class="text-xl font-semibold mb-2">Giochi da Tavolo</h3>
-                            <p class="text-blue-100">Strategia, cooperativi e classici</p>
-                        </button>
+						<a href="javascript:void(0);" onclick="selectCategory('role')" class="category-btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
+    <div class="text-4xl mb-3">🐉</div>
+    <h3 class="text-xl font-semibold mb-2">Giochi di Ruolo</h3>
+    <p class="text-red-100">D&D, Call of Cthulhu, Warhammer e altri</p>
+</a>
+
+                       <a href="javascript:void(0);" onclick="selectCategory('board')" class="category-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
+    <div class="text-4xl mb-3">🎲</div>
+    <h3 class="text-xl font-semibold mb-2">Giochi da Tavolo</h3>
+    <p class="text-blue-100">Strategia, cooperativi e classici</p>
+</a>
+
+
                     </div>
                 </div>
 
@@ -135,18 +137,23 @@
                         <div id="campaign-type-selection" class="hidden">
                             <label class="block text-white font-semibold mb-2">Tipo di Sessione</label>
                             <div class="grid grid-cols-2 gap-4">
-                                <button type="button" onclick="selectCampaignType('oneshot')" id="oneshot-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30">
-                                    <div class="text-2xl mb-2">🎯</div>
-                                    <div class="font-semibold">One Shot</div>
-                                    <div class="text-sm opacity-75">Sessione singola</div>
-                                </button>
-                                <button type="button" onclick="selectCampaignType('campaign')" id="campaign-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30">
-                                    <div class="text-2xl mb-2">📚</div>
-                                    <div class="font-semibold">Campagna</div>
-                                    <div class="text-sm opacity-75">Sessioni ricorrenti</div>
-                                </button>
+                                
+								
+								<a href="javascript:void(0);" onclick="selectCampaignType('oneshot')" id="oneshot-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
+    <div class="text-2xl mb-2">🎯</div>
+    <div class="font-semibold">One Shot</div>
+    <div class="text-sm opacity-75">Sessione singola</div>
+</a>
+								
+								
+								
+                                <a href="javascript:void(0);" onclick="selectCampaignType('campaign')" id="campaign-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg block text-center no-underline">
+    <div class="text-2xl mb-2">📚</div>
+    <div class="font-semibold">Campagna</div>
+    <div class="text-sm opacity-75">Sessioni ricorrenti</div>
+</a>
                             </div>
-                            <input type="hidden" id="campaign-type" required>
+                            <input type="hidden" id="campaign-type">
                         </div>
                         
 
