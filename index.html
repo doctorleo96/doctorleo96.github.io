@@ -8,52 +8,52 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-        body { font-family: 'Inter', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'); [cite_start]/* [cite: 1] */
+        body { font-family: 'Inter', sans-serif; [cite_start]} /* [cite: 2] */
         
         .tree-line {
-            position: relative;
+            position: relative; [cite_start]/* [cite: 3] */
         }
         
         .tree-line::before {
-            content: '';
-            position: absolute;
-            left: -20px;
-            top: 50%;
-            width: 15px;
-            height: 2px;
-            background: #6366f1;
+            content: ''; [cite_start]/* [cite: 3] */
+            position: absolute; [cite_start]/* [cite: 4] */
+            left: -20px; [cite_start]/* [cite: 4] */
+            top: 50%; [cite_start]/* [cite: 4] */
+            width: 15px; [cite_start]/* [cite: 4] */
+            height: 2px; [cite_start]/* [cite: 4] */
+            background: #6366f1; [cite_start]/* [cite: 4] */
         }
         
         .tree-branch::before {
-            content: '';
-            position: absolute;
-            left: -20px;
-            top: 0;
-            width: 2px;
-            height: 100%;
-            background: #6366f1;
+            content: ''; [cite_start]/* [cite: 5] */
+            position: absolute; [cite_start]/* [cite: 6] */
+            left: -20px; [cite_start]/* [cite: 6] */
+            top: 0; [cite_start]/* [cite: 6] */
+            width: 2px; [cite_start]/* [cite: 6] */
+            height: 100%; [cite_start]/* [cite: 6] */
+            background: #6366f1; [cite_start]/* [cite: 6] */
         }
         
         .fade-in {
-            animation: fadeIn 0.5s ease-in;
+            animation: fadeIn 0.5s ease-in; [cite_start]/* [cite: 7] */
         }
         
         @keyframes fadeIn {
-            from { opacity: 0;
-            transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0);
+            from { opacity: 0; [cite_start]/* [cite: 8] */
+            transform: translateY(10px); [cite_start]} /* [cite: 9] */
+            to { opacity: 1; transform: translateY(0); [cite_start]/* [cite: 9, 10] */
             }
         }
         
         .pulse-animation {
-            animation: pulse 2s infinite;
+            animation: pulse 2s infinite; [cite_start]/* [cite: 11] */
         }
         
         @keyframes pulse {
-            0%, 100% { opacity: 1;
+            0%, 100% { opacity: 1; [cite_start]/* [cite: 12] */
             }
-            50% { opacity: 0.7;
+            50% { opacity: 0.7; [cite_start]/* [cite: 13] */
             }
         }
     </style>
@@ -64,152 +64,119 @@
             <h1 class="text-5xl font-bold text-white mb-4">🎮 Prenotazioni Venerdì Sera</h1>
             <div id="countdown" class="text-xl text-indigo-200 mb-6"></div>
             <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4 inline-block">
-                <p class="text-white">Prossimo reset: <span id="next-reset" class="font-semibold text-yellow-300"></span></p>
-            </div>
+                <p class="text-white">Prossimo reset: <span id="next-reset" class="font-semibold text-yellow-300"></span></p> </div>
         </div>
 
         <div id="breadcrumb" class="mb-8 hidden">
             <div class="bg-white/10 backdrop-blur-sm rounded-lg p-4">
                 <div class="flex items-center space-x-2 text-white" id="breadcrumb-content">
-                    </div>
-            </div>
-        </div>
+                </div>
+            </div> </div>
 
         <div class="max-w-4xl mx-auto">
             <div id="main-content" class="bg-white/10 backdrop-blur-sm rounded-xl p-8 shadow-2xl">
                 <div id="category-selection" class="fade-in">
                     <h2 class="text-3xl font-semibold text-white mb-8 text-center">Scegli la Categoria di Gioco</h2>
-                    <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-                        <button onclick="selectCategory('role')" class="category-btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
+                    <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto"> <button onclick="selectCategory('role')" class="category-btn bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
                             <div class="text-4xl mb-3">🐉</div>
-                            <h3 class="text-xl font-semibold mb-2">Giochi di Ruolo</h3>
-                            <p class="text-red-100">D&D, Call of Cthulhu, Warhammer e altri</p>
+                            <h3 class="text-xl font-semibold mb-2">Giochi di Ruolo</h3> <p class="text-red-100">D&D, Call of Cthulhu, Warhammer e altri</p>
                         </button>
-                        
-                        <button onclick="selectCategory('board')" class="category-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            <div class="text-4xl mb-3">🎲</div>
-                            <h3 class="text-xl font-semibold mb-2">Giochi da Tavolo</h3>
-                            <p class="text-blue-100">Strategia, cooperativi e classici</p>
+                        <button onclick="selectCategory('board')" class="category-btn bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white p-6 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg"> <div class="text-4xl mb-3">🎲</div>
+                            <h3 class="text-xl font-semibold mb-2">Giochi da Tavolo</h3> <p class="text-blue-100">Strategia, cooperativi e classici</p>
                         </button>
                     </div>
                 </div>
 
-                <div id="game-selection" class="hidden">
-                    <div class="flex items-center mb-6">
+                <div id="game-selection" class="hidden"> <div class="flex items-center mb-6">
                         <button onclick="goBack()" class="text-white hover:text-yellow-300 transition-colors mr-4">
-                            ← Indietro
-                        </button>
+                            ← Indietro </button>
                         <h2 id="game-selection-title" class="text-3xl font-semibold text-white">Scegli il Gioco</h2>
                     </div>
                     <div id="games-grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        </div>
-                </div>
+                    </div> </div>
 
                 <div id="booking-form" class="hidden">
                     <div class="flex items-center mb-6">
-                        <button onclick="goBack()" class="text-white hover:text-yellow-300 transition-colors mr-4">
-                            ← Indietro
+                        <button onclick="goBack()" class="text-white hover:text-yellow-300 transition-colors mr-4"> ← Indietro
                         </button>
                         <h2 class="text-3xl font-semibold text-white">Completa la Prenotazione</h2>
-                    </div>
-                    
-                    <div class="bg-white/10 rounded-lg p-6 mb-6">
+                    </div> <div class="bg-white/10 rounded-lg p-6 mb-6">
                         <h3 class="text-xl font-semibold text-white mb-4">Riepilogo Prenotazione</h3>
-                        <div class="space-y-2 text-white">
-                            <p><span class="font-semibold">Gioco:</span> <span id="selected-game"></span></p>
+                        <div class="space-y-2 text-white"> <p><span class="font-semibold">Gioco:</span> <span id="selected-game"></span></p>
                             <p><span class="font-semibold">Data:</span> <span id="selected-date"></span></p>
                         </div>
-                    </div>
-
-                    <form onsubmit="submitBooking(event)" class="space-y-6">
+                    </div> <form onsubmit="submitBooking(event)" class="space-y-6">
                         <div>
                             <label class="block text-white font-semibold mb-2">Nome Completo</label>
-                            <input type="text" id="player-name" required class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none">
-                        </div>
+                            <input type="text" id="player-name" required class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none"> </div>
                         
-                        <div id="campaign-type-selection" class="hidden">
-                            <label class="block text-white font-semibold mb-2">Tipo di Sessione</label>
+                        <div id="campaign-type-selection" class="hidden"> <label class="block text-white font-semibold mb-2">Tipo di Sessione</label>
                             <div class="grid grid-cols-2 gap-4">
-                                <button type="button" onclick="selectCampaignType('oneshot')" id="oneshot-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30">
-                                    <div class="text-2xl mb-2">🎯</div>
+                                <button type="button" onclick="selectCampaignType('oneshot')" id="oneshot-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30"> <div class="text-2xl mb-2">🎯</div>
                                     <div class="font-semibold">One Shot</div>
-                                    <div class="text-sm opacity-75">Sessione singola</div>
-                                </button>
-                                <button type="button" onclick="selectCampaignType('campaign')" id="campaign-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30">
-                                    <div class="text-2xl mb-2">📚</div>
+                                    <div class="text-sm opacity-75">Sessione singola</div> </button>
+                                <button type="button" onclick="selectCampaignType('campaign')" id="campaign-btn" class="campaign-type-btn bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 border border-white/30"> <div class="text-2xl mb-2">📚</div>
                                     <div class="font-semibold">Campagna</div>
-                                    <div class="text-sm opacity-75">Sessioni ricorrenti</div>
-                                </button>
+                                    <div class="text-sm opacity-75">Sessioni ricorrenti</div> </button>
                             </div>
-                            <input type="hidden" id="campaign-type" required>
-                        </div>
+                            <input type="hidden" id="campaign-type" required> </div>
                    
                         <div>
-                            <label class="block text-white font-semibold mb-2">Note Aggiuntive (opzionale)</label>
-                            <textarea id="notes" rows="3" class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none" placeholder="Eventuali richieste speciali..."></textarea>
+                            <label class="block text-white font-semibold mb-2">Note Aggiuntive (opzionale)</label> <textarea id="notes" rows="3" class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none" placeholder="Eventuali richieste speciali..."></textarea>
                         </div>
-                        
-                        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                            🎯 Conferma Prenotazione
+                    
+                        <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg"> 🎯 Conferma Prenotazione
                         </button>
-                    </form>
-                </div>
+                    </form> </div>
 
                 <div id="success-message" class="hidden text-center">
                     <div class="text-6xl mb-6">🎉</div>
-                    <h2 class="text-3xl font-bold text-white mb-4">Prenotazione Confermata!</h2>
-                    <div class="bg-white/10 rounded-lg p-6 mb-6">
+                    <h2 class="text-3xl font-bold text-white mb-4">Prenotazione Confermata!</h2> <div class="bg-white/10 rounded-lg p-6 mb-6">
                         <div id="booking-details" class="text-white space-y-2">
-                            </div>
-                    </div>
-                    <button onclick="resetBooking()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300">
+                        </div>
+                    </div> <button onclick="resetBooking()" class="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300">
                         Nuova Prenotazione
                     </button>
                 </div>
-            </div>
-        </div>
+            </div> </div>
 
         <div class="max-w-4xl mx-auto mt-8">
             <div class="bg-white/10 backdrop-blur-sm rounded-xl p-6 shadow-2xl">
                 <h3 class="text-2xl font-semibold text-white mb-4">Prenotazioni Attive</h3>
                 <div id="current-bookings" class="space-y-3">
-                    </div>
-            </div>
+                </div> </div>
         </div>
     </div>
 
     <script>
-        // QUI DEVI INCOLLARE TUTTO IL CODICE JAVASCRIPT DELLA PARTE 2.
-        // RICORDA DI RIMUOVERE QUALSIASI TAG o DOPO AVERLO INCOLLATO.
-
-
-// Configurazione Supabase (INSERISCI QUI I TUOI VALORI ESATTI)
-        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; // Il tuo URL di Supabase
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; // La tua chiave anon public
+        [cite_start]// Configurazione Supabase (INSERISCI QUI I TUOI VALORI ESATTI) /* [cite: 41] */
+        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; [cite_start]/* [cite: 41] */
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; [cite_start]/* [cite: 42] */
         
         // Inizializza il client Supabase
-        const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // ********* VARIABILI GLOBALI (DICHIARATE QUI PER PRIMA) *********
+        const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY); [cite_start]/* [cite: 43] */
+        
+        [cite_start]// ********* VARIABILI GLOBALI (DICHIARATE QUI PER PRIMA) ********* /* [cite: 44] */
         // Current booking state
         let currentBooking = {
             category: '',
             game: '',
             time: '',
             step: 'category'
-        };
+        }; [cite_start]/* [cite: 44] */
         // Navigation history
-        let navigationHistory = ['category'];
-        // ********* FINE DELLE VARIABILI GLOBALI *********
+        let navigationHistory = ['category']; [cite_start]/* [cite: 45] */
+        [cite_start]// ********* FINE DELLE VARIABILI GLOBALI ********* /* [cite: 46] */
 
 
         async function init() {
-            updateCountdown();
-            await displayCurrentBookings();
-            setInterval(updateCountdown, 1000);
+            updateCountdown(); [cite_start]/* [cite: 47] */
+            await displayCurrentBookings(); [cite_start]/* [cite: 47] */
+            setInterval(updateCountdown, 1000); [cite_start]/* [cite: 47] */
 
-            // checkWeeklyReset(); // Commentato per ora, da implementare con Supabase Function
-            // setInterval(checkWeeklyReset, 60000); // Commentato per ora
+            // Uncomment the checkWeeklyReset() and its setInterval if you have the Supabase Function implemented
+            // checkWeeklyReset();
+            // setInterval(checkWeeklyReset, 60000);
         }
 
         // Game data structure
@@ -217,132 +184,130 @@
             role: [
                 { name: 'Dungeons & Dragons 5e', emoji: '🐉', players: '3-6' },
                 { name: 'Call of Cthulhu', emoji: '🐙', players: '3-6' },
-                { name: 'Warhammer 40k RPG', emoji: '⚡', players: '3-6' },
+                [cite_start]{ name: 'Warhammer 40k RPG', emoji: '⚡', players: '3-6' }, /* [cite: 49] */
                 { name: 'Altri Giochi di Ruolo', emoji: '🎭', players: '2-8' }
             ],
             board: [
-                { name: 'CADUTA LIBERA', emoji: '🪂', players: '2-6' },
-                { name: 'DECKTECTIVE ROSE ROSSO SANGUE', emoji: '🌹', players: '1-6' },
-                { name: 'DECKTECTIVE INCUBO ALLO SPECCHIO', emoji: '🪞', players: '1-6' },
-                { name: 'LAS VEGAS ROYALE', emoji: '🎰', players: '2-5' },
-                { name: 'ALIEN IL DESTINO DELLA NOSTROMO', emoji: '👽', players: '1-5' },
-                { name: 'MINECRAFT HEROES OF VILLAGE', emoji: '⛏️', players: '2-4' },
-                { name: 'VILLAINOUS INTRODUCTION TO EVIL', emoji: '😈', players: '2-6' },
-                { name: 'VILLAINS THE CARD GAME', emoji: '🃏', players: '2-4' },
-                { name: 'LICANTROPO PRIMA LUCE', emoji: '🌅', players: '5-10' },
-                { name: 'LICANTROPO LUNA PIENA', emoji: '🌕', players: '5-10' },
-                { name: 'WHAT DO YOU MEAN', emoji: '❓', players: '3-8' },
-                { name: 'FUN LAND', emoji: '🎡', players: '2-4' },
-                { name: 'TICKET TO RIDE', emoji: '🚂', players: '2-5' },
-                { name: 'CORTEX', emoji: '🧠', players: '2-6' },
-                { name: 'EXPLODING KITTENS', emoji: '💥', players: '2-5' },
-                { name: 'JUNGLE SPEED', emoji: '🐆', players: '3-8' },
-                { name: 'PANDEMIC', emoji: '🦠', players: '2-4' },
-                { name: 'UNO', emoji: '🔴', players: '2-10' },
-                { name: 'SPLENDOR', emoji: '💎', players: '2-4' },
-                { name: 'COUNCIL SHADOWS', emoji: '🏛️', players: '2-5' },
-                { name: 'KINGDOMINO', emoji: '👑', players: '2-4' },
-                { name: '7 WONDERS', emoji: '🏛️', players: '2-7' },
-                { name: 'FUNNY FARMER', emoji: '🚜', players: '2-4' },
-                { name: 'SCOTLAND YARD', emoji: '🕵️', players: '3-6' },
-                { name: 'DERNIER UNO SOLO', emoji: '🎯', players: '2-8' },
-                { name: 'AZUL', emoji: '🎨', players: '2-4' },
-                { name: 'BONSAI', emoji: '🌳', players: '1-4' },
-                { name: 'IST DA WER', emoji: '🤔', players: '3-6' },
-                { name: 'MIRAKEL MIX', emoji: '✨', players: '2-5' },
-                { name: 'BANG', emoji: '🔫', players: '4-7' },
-                { name: 'LUPUS IN TABULA', emoji: '🐺', players: '8-24' },
-                { name: 'LEO VA DAL BARBIERE', emoji: '✂️', players: '2-5' },
-                { name: 'KAKURO', emoji: '🔢', players: '1-4' },
-                { name: 'ON THE ROAD', emoji: '🛣️', players: '2-6' },
-                { name: 'COLORETTO', emoji: '🎨', players: '3-5' },
-                { name: 'DECKSCAPE', emoji: '🗝️', players: '1-6' },
-                { name: 'SHERLOCK HOLMES CONSULENTE', emoji: '🔍', players: '1-8' },
-                { name: 'PARTY LINES', emoji: '📞', players: '4-8' },
-                { name: 'PLAGIO', emoji: '📚', players: '3-8' },
-                { name: 'FRESH FRUITS', emoji: '🍎', players: '2-5' },
-                { name: 'I BUONI E I CATTIVI FANTASMI', emoji: '👻', players: '2-4' },
-                { name: 'CARTAGENA', emoji: '🏴‍☠️', players: '2-5' },
-                { name: 'PASSA LA BOMBA', emoji: '💣', players: '2-12' },
-                { name: 'DIXIT', emoji: '🎭', players: '3-8' },
-                { name: 'MYSTERIUM', emoji: '🔮', players: '2-7' },
-                { name: 'LAMA', emoji: '🦙', players: '2-6' },
-                { name: 'UNSTABLE UNICORNS', emoji: '🦄', players: '2-8' },
-                { name: 'SILVER MINE', emoji: '⛏️', players: '3-6' },
-                { name: 'COYOTE', emoji: '🐺', players: '3-6' },
-                { name: 'DIXIT MIRRORS', emoji: '🪞', players: '3-8' },
-                { name: 'CARCASSONNE', emoji: '🏰', players: '2-5' },
-                { name: 'SABOTEUR', emoji: '⛏️', players: '3-10' },
-                { name: 'PALEO', emoji: '🦕', players: '1-4' },
-                { name: 'STONE AGE', emoji: '🗿', players: '2-4' },
-                { name: 'INKOGNITO', emoji: '🎭', players: '3-5' },
-                { name: 'KALEIDOS', emoji: '🔍', players: '2-12' },
-                { name: 'ACCIPICCHIA', emoji: '😲', players: '2-8' },
-                { name: 'VENICE CONNECTION', emoji: '🚤', players: '2-6' },
-                { name: 'FANTASCATTI', emoji: '👻', players: '2-8' },
-                { name: 'DOBBLE', emoji: '👁️', players: '2-8' },
-                { name: 'BARKING KITTENS', emoji: '🐱', players: '2-5' },
-                { name: 'OVERBOOKING', emoji: '✈️', players: '2-5' },
-                { name: 'LE LEGGENDE DI ANDOR', emoji: '⚔️', players: '2-4' },
-                { name: 'CATAN', emoji: '🏝️', players: '3-4' },
-                { name: 'CAN\'T STOP', emoji: '🎲', players: '2-4' },
-                { name: 'PICCHIATELLO', emoji: '🤪', players: '2-6' }
+                [cite_start]{ name: 'CADUTA LIBERA', emoji: '🪂', players: '2-6' }, /* [cite: 50] */
+                [cite_start]{ name: 'DECKTECTIVE ROSE ROSSO SANGUE', emoji: '🌹', players: '1-6' }, /* [cite: 50] */
+                [cite_start]{ name: 'DECKTECTIVE INCUBO ALLO SPECCHIO', emoji: '🪞', players: '1-6' }, /* [cite: 50] */
+                [cite_start]{ name: 'LAS VEGAS ROYALE', emoji: '🎰', players: '2-5' }, /* [cite: 50] */
+                [cite_start]{ name: 'ALIEN IL DESTINO DELLA NOSTROMO', emoji: '👽', players: '1-5' }, /* [cite: 51] */
+                [cite_start]{ name: 'MINECRAFT HEROES OF VILLAGE', emoji: '⛏️', players: '2-4' }, /* [cite: 51] */
+                [cite_start]{ name: 'VILLAINOUS INTRODUCTION TO EVIL', emoji: '😈', players: '2-6' }, /* [cite: 51] */
+                [cite_start]{ name: 'VILLAINS THE CARD GAME', emoji: '🃏', players: '2-4' }, /* [cite: 51] */
+                [cite_start]{ name: 'LICANTROPO PRIMA LUCE', emoji: '🌅', players: '5-10' }, /* [cite: 52] */
+                [cite_start]{ name: 'LICANTROPO LUNA PIENA', emoji: '🌕', players: '5-10' }, /* [cite: 52] */
+                [cite_start]{ name: 'WHAT DO YOU MEAN', emoji: '❓', players: '3-8' }, /* [cite: 52] */
+                [cite_start]{ name: 'FUN LAND', emoji: '🎡', players: '2-4' }, /* [cite: 52] */
+                [cite_start]{ name: 'TICKET TO RIDE', emoji: '🚂', players: '2-5' }, /* [cite: 53] */
+                [cite_start]{ name: 'CORTEX', emoji: '🧠', players: '2-6' }, /* [cite: 53] */
+                [cite_start]{ name: 'EXPLODING KITTENS', emoji: '💥', players: '2-5' }, /* [cite: 53] */
+                [cite_start]{ name: 'JUNGLE SPEED', emoji: '🐆', players: '3-8' }, /* [cite: 53] */
+                [cite_start]{ name: 'PANDEMIC', emoji: '🦠', players: '2-4' }, /* [cite: 53] */
+                [cite_start]{ name: 'UNO', emoji: '🔴', players: '2-10' }, /* [cite: 54] */
+                [cite_start]{ name: 'SPLENDOR', emoji: '💎', players: '2-4' }, /* [cite: 54] */
+                [cite_start]{ name: 'COUNCIL SHADOWS', emoji: '🏛️', players: '2-5' }, /* [cite: 54] */
+                [cite_start]{ name: 'KINGDOMINO', emoji: '👑', players: '2-4' }, /* [cite: 54] */
+                [cite_start]{ name: '7 WONDERS', emoji: '🏛️', players: '2-7' }, /* [cite: 55] */
+                [cite_start]{ name: 'FUNNY FARMER', emoji: '🚜', players: '2-4' }, /* [cite: 55] */
+                [cite_start]{ name: 'SCOTLAND YARD', emoji: '🕵️', players: '3-6' }, /* [cite: 55] */
+                [cite_start]{ name: 'DERNIER UNO SOLO', emoji: '🎯', players: '2-8' }, /* [cite: 55] */
+                [cite_start]{ name: 'AZUL', emoji: '🎨', players: '2-4' }, /* [cite: 56] */
+                [cite_start]{ name: 'BONSAI', emoji: '🌳', players: '1-4' }, /* [cite: 56] */
+                [cite_start]{ name: 'IST DA WER', emoji: '🤔', players: '3-6' }, /* [cite: 56] */
+                [cite_start]{ name: 'MIRAKEL MIX', emoji: '✨', players: '2-5' }, /* [cite: 56] */
+                [cite_start]{ name: 'BANG', emoji: '🔫', players: '4-7' }, /* [cite: 57] */
+                [cite_start]{ name: 'LUPUS IN TABULA', emoji: '🐺', players: '8-24' }, /* [cite: 57] */
+                [cite_start]{ name: 'LEO VA DAL BARBIERE', emoji: '✂️', players: '2-5' }, /* [cite: 57] */
+                [cite_start]{ name: 'KAKURO', emoji: '🔢', players: '1-4' }, /* [cite: 57] */
+                [cite_start]{ name: 'ON THE ROAD', emoji: '🛣️', players: '2-6' }, /* [cite: 58] */
+                [cite_start]{ name: 'COLORETTO', emoji: '🎨', players: '3-5' }, /* [cite: 58] */
+                [cite_start]{ name: 'DECKSCAPE', emoji: '🗝️', players: '1-6' }, /* [cite: 58] */
+                [cite_start]{ name: 'SHERLOCK HOLMES CONSULENTE', emoji: '🔍', players: '1-8' }, /* [cite: 58] */
+                [cite_start]{ name: 'PARTY LINES', emoji: '📞', players: '4-8' }, /* [cite: 59] */
+                [cite_start]{ name: 'PLAGIO', emoji: '📚', players: '3-8' }, /* [cite: 59] */
+                [cite_start]{ name: 'FRESH FRUITS', emoji: '🍎', players: '2-5' }, /* [cite: 59] */
+                [cite_start]{ name: 'I BUONI E I CATTIVI FANTASMI', emoji: '👻', players: '2-4' }, /* [cite: 59] */
+                [cite_start]{ name: 'CARTAGENA', emoji: '🏴‍☠️', players: '2-5' }, /* [cite: 59] */
+                [cite_start]{ name: 'PASSA LA BOMBA', emoji: '💣', players: '2-12' }, /* [cite: 60] */
+                [cite_start]{ name: 'DIXIT', emoji: '🎭', players: '3-8' }, /* [cite: 60] */
+                [cite_start]{ name: 'MYSTERIUM', emoji: '🔮', players: '2-7' }, /* [cite: 60] */
+                [cite_start]{ name: 'LAMA', emoji: '🦙', players: '2-6' }, /* [cite: 60] */
+                [cite_start]{ name: 'UNSTABLE UNICORNS', emoji: '🦄', players: '2-8' }, /* [cite: 61] */
+                [cite_start]{ name: 'SILVER MINE', emoji: '⛏️', players: '3-6' }, /* [cite: 61] */
+                [cite_start]{ name: 'COYOTE', emoji: '🐺', players: '3-6' }, /* [cite: 61] */
+                [cite_start]{ name: 'DIXIT MIRRORS', emoji: '🪞', players: '3-8' }, /* [cite: 61] */
+                [cite_start]{ name: 'CARCASSONNE', emoji: '🏰', players: '2-5' }, /* [cite: 62] */
+                [cite_start]{ name: 'SABOTEUR', emoji: '⛏️', players: '3-10' }, /* [cite: 62] */
+                [cite_start]{ name: 'PALEO', emoji: '🦕', players: '1-4' }, /* [cite: 62] */
+                [cite_start]{ name: 'STONE AGE', emoji: '🗿', players: '2-4' }, /* [cite: 62] */
+                [cite_start]{ name: 'INKOGNITO', emoji: '🎭', players: '3-5' }, /* [cite: 63] */
+                [cite_start]{ name: 'KALEIDOS', emoji: '🔍', players: '2-12' }, /* [cite: 63] */
+                [cite_start]{ name: 'ACCIPICCHIA', emoji: '😲', players: '2-8' }, /* [cite: 63] */
+                [cite_start]{ name: 'VENICE CONNECTION', emoji: '🚤', players: '2-6' }, /* [cite: 63] */
+                [cite_start]{ name: 'FANTASCATTI', emoji: '👻', players: '2-8' }, /* [cite: 63] */
+                [cite_start]{ name: 'DOBBLE', emoji: '👁️', players: '2-8' }, /* [cite: 64] */
+                [cite_start]{ name: 'BARKING KITTENS', emoji: '🐱', players: '2-5' }, /* [cite: 64] */
+                [cite_start]{ name: 'OVERBOOKING', emoji: '✈️', players: '2-5' }, /* [cite: 64] */
+                [cite_start]{ name: 'LE LEGGENDE DI ANDOR', emoji: '⚔️', players: '2-4' }, /* [cite: 64] */
+                [cite_start]{ name: 'CATAN', emoji: '🏝️', players: '3-4' }, /* [cite: 65] */
+                [cite_start]{ name: 'CAN\'T STOP', emoji: '🎲', players: '2-4' }, /* [cite: 65] */
+                [cite_start]{ name: 'PICCHIATELLO', emoji: '🤪', players: '2-6' } /* [cite: 65] */
             ]
-        };
-        // Get next Friday at 20:00 (8 PM) for reset
-        // Update countdown to next Friday (for the event, still at 23:59:59 as in your original code)
-        // Se vuoi il countdown fino al venerdì sera in generale (23:59)
+        }; [cite_start]/* [cite: 66] */
+
         // Get next Friday at 20:00 (8 PM) for reset
         function getNextFridayResetTime() {
-            const now = new Date();
-            const targetResetHour = 20; // 20:00 (8 PM)
+            const now = new Date(); [cite_start]/* [cite: 67] */
+            const targetResetHour = 20; [cite_start]// 20:00 (8 PM) /* [cite: 67] */
 
-            let nextFriday = new Date(now);
+            let nextFriday = new Date(now); [cite_start]/* [cite: 68] */
             // Calculate days until next Friday
-            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
-            nextFriday.setDate(now.getDate() + daysUntilFriday);
-            nextFriday.setHours(targetResetHour, 0, 0, 0); // Set to 20:00
+            const daysUntilFriday = (5 - now.getDay() + 7) % 7; [cite_start]/* [cite: 68] */
+            nextFriday.setDate(now.getDate() + daysUntilFriday); [cite_start]/* [cite: 69] */
+            nextFriday.setHours(targetResetHour, 0, 0, 0); [cite_start]// Set to 20:00 /* [cite: 69] */
 
             // If it's already Friday and past 20:00, the "next" reset is in 7 days
             if (now.getDay() === 5 && now.getHours() >= targetResetHour) {
-                nextFriday.setDate(nextFriday.getDate() + 7);
+                nextFriday.setDate(nextFriday.getDate() + 7); [cite_start]/* [cite: 70] */
             }
-            return nextFriday;
+            return nextFriday; [cite_start]/* [cite: 71] */
         }
 
         // Update countdown to next Friday (for the event, still at 23:59:59 as in your original code)
-        // Se vuoi il countdown fino al venerdì sera in generale (23:59)
         function getNextFridayEventTime() {
-            const now = new Date();
-            const nextFriday = new Date();
-            const daysUntilFriday = (5 - now.getDay() + 7) % 7;
+            const now = new Date(); [cite_start]/* [cite: 72] */
+            const nextFriday = new Date(); [cite_start]/* [cite: 72] */
+            const daysUntilFriday = (5 - now.getDay() + 7) % 7; [cite_start]/* [cite: 73] */
             if (daysUntilFriday === 0 && now.getDay() === 5) {
                 if (now.getHours() < 23 || (now.getHours() === 23 && now.getMinutes() < 59)) {
-                    nextFriday.setHours(23, 59, 59, 999);
+                    nextFriday.setHours(23, 59, 59, 999); [cite_start]/* [cite: 74] */
                 } else {
-                    nextFriday.setDate(now.getDate() + 7);
-                    nextFriday.setHours(23, 59, 59, 999);
+                    nextFriday.setDate(now.getDate() + 7); [cite_start]/* [cite: 75] */
+                    nextFriday.setHours(23, 59, 59, 999); [cite_start]/* [cite: 75] */
                 }
             } else {
-                nextFriday.setDate(now.getDate() + (daysUntilFriday || 7));
-                nextFriday.setHours(23, 59, 59, 999);
+                nextFriday.setDate(now.getDate() + (daysUntilFriday || 7)); [cite_start]/* [cite: 76] */
+                nextFriday.setHours(23, 59, 59, 999); [cite_start]/* [cite: 76] */
             }
-            return nextFriday;
+            return nextFriday; [cite_start]/* [cite: 77] */
         }
+
         function updateCountdown() {
-            const now = new Date();
-            const nextFridayEvent = getNextFridayEventTime();
+            const now = new Date(); [cite_start]/* [cite: 78] */
+            const nextFridayEvent = getNextFridayEventTime(); [cite_start]/* [cite: 78] */
             // Usa la funzione per l'evento
-            const timeUntil = nextFridayEvent - now;
+            const timeUntil = nextFridayEvent - now; [cite_start]/* [cite: 79] */
             if (timeUntil > 0) {
-                const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000);
+                const days = Math.floor(timeUntil / (1000 * 60 * 60 * 24)); [cite_start]/* [cite: 80] */
+                const hours = Math.floor((timeUntil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)); [cite_start]/* [cite: 81] */
+                const minutes = Math.floor((timeUntil % (1000 * 60 * 60)) / (1000 * 60)); [cite_start]/* [cite: 82] */
+                const seconds = Math.floor((timeUntil % (1000 * 60)) / 1000); [cite_start]/* [cite: 83] */
                 document.getElementById('countdown').innerHTML =
-                    `⏰ Tempo rimanente: ${days}g ${hours}h ${minutes}m ${seconds}s`;
+                    `⏰ Tempo rimanente: ${days}g ${hours}h ${minutes}m ${seconds}s`; [cite_start]/* [cite: 84] */
             } else {
-                document.getElementById('countdown').innerHTML = '🎮 È venerdì sera! Buon divertimento!';
+                document.getElementById('countdown').innerHTML = '🎮 È venerdì sera! Buon divertimento!'; [cite_start]/* [cite: 85] */
             }
 
             // Display next reset time (if you want to show 20:00 for next reset)
@@ -350,38 +315,39 @@
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric',
+                [cite_start]day: 'numeric', /* [cite: 86] */
                 hour: '2-digit',
                 minute: '2-digit'
-            });
+            }); [cite_start]/* [cite: 87] */
         }
 
-        /* checkWeeklyReset()
+        /*
+        // checkWeeklyReset()
         async function checkWeeklyReset() {
-            const now = new Date();
-            const nextFridayReset = getNextFridayResetTime(); // Ottieni l'ora di reset dal client
-            const lastLocalReset = localStorage.getItem('lastResetTriggered'); // Salva l'ultimo trigger locale
+            const now = new Date(); [cite_start]// [cite: 88]
+            const nextFridayReset = getNextFridayResetTime(); [cite_start]// Ottieni l'ora di reset dal client // [cite: 88]
+            const lastLocalReset = localStorage.getItem('lastResetTriggered'); [cite_start]// [cite: 89]
 
             // Se l'ora attuale è dopo l'ora di reset e non è stato resettato in questa "finestra"
             if (now > nextFridayReset && (!lastLocalReset || new Date(lastLocalReset) < nextFridayReset)) {
-                console.log("Tentativo di reset settimanale...");
+                console.log("Tentativo di reset settimanale..."); [cite_start]// [cite: 90]
                 try {
                     // Questa parte dovrebbe chiamare una Supabase Function
                     // const response = await fetch(API_URL, {
                     //     method: 'POST',
-                    //     headers: { 'Content-Type': 'application/json' },
+                    [cite_start]//     headers: { 'Content-Type': 'application/json' }, // [cite: 91]
                     //     body: JSON.stringify({ action: 'resetBookings', lastResetTime: lastLocalReset }) // Invia l'ora dell'ultimo reset conosciuto
-                    // });
-                    // const data = await response.json();
+                    // }); [cite_start]// [cite: 92]
+                    // const data = await response.json(); [cite_start]// [cite: 92]
                     // if (data.status === 'success' && data.resetOccurred) {
-                    //     console.log("Reset settimanale completato dal server.");
-                    //     localStorage.setItem('lastResetTriggered', now.toISOString()); // Aggiorna il timestamp del trigger
-                    //     await displayCurrentBookings(); // Ricarica le prenotazioni dopo il reset
+                    //     console.log("Reset settimanale completato dal server."); [cite_start]// [cite: 93]
+                    //     localStorage.setItem('lastResetTriggered', now.toISOString()); [cite_start]// Aggiorna il timestamp del trigger // [cite: 93]
+                    //     await displayCurrentBookings(); [cite_start]// Ricarica le prenotazioni dopo il reset // [cite: 94]
                     // } else {
-                    //     console.log("Reset non necessario o non completato:", data.message);
+                    //     console.log("Reset non necessario o non completato:", data.message); [cite_start]// [cite: 95]
                     // }
                 } catch (error) {
-                    console.error("Errore durante il reset settimanale:", error);
+                    console.error("Errore durante il reset settimanale:", error); [cite_start]// [cite: 96]
                 }
             }
         }
@@ -389,9 +355,9 @@
 
         // Select category
         function selectCategory(category) {
-            currentBooking.category = category;
-            currentBooking.step = 'game';
-            navigationHistory.push('game');
+            currentBooking.category = category; [cite_start]/* [cite: 97] */
+            currentBooking.step = 'game'; [cite_start]/* [cite: 97] */
+            navigationHistory.push('game'); [cite_start]/* [cite: 97] */
             
             showGameSelection(category);
             updateBreadcrumb();
@@ -399,36 +365,35 @@
 
         // Show game selection
         function showGameSelection(category) {
-            document.getElementById('category-selection').classList.add('hidden');
-            document.getElementById('game-selection').classList.remove('hidden');
-            document.getElementById('game-selection').classList.add('fade-in');
+            document.getElementById('category-selection').classList.add('hidden'); [cite_start]/* [cite: 98] */
+            document.getElementById('game-selection').classList.remove('hidden'); [cite_start]/* [cite: 98] */
+            document.getElementById('game-selection').classList.add('fade-in'); [cite_start]/* [cite: 98] */
             
             const categoryNames = {
                 role: 'Giochi di Ruolo',
                 board: 'Giochi da Tavolo'
-            };
-            document.getElementById('game-selection-title').textContent = categoryNames[category];
+            }; [cite_start]/* [cite: 99] */
+            document.getElementById('game-selection-title').textContent = categoryNames[category]; [cite_start]/* [cite: 99] */
             
             const gamesGrid = document.getElementById('games-grid');
-            gamesGrid.innerHTML = '';
+            gamesGrid.innerHTML = ''; [cite_start]/* [cite: 100] */
             gameData[category].forEach(game => {
                 const gameButton = document.createElement('button');
                 gameButton.className = 'bg-white/20 hover:bg-white/30 text-white p-4 rounded-lg transition-all duration-300 transform hover:scale-105';
                 gameButton.onclick = () => selectGame(game.name);
                 gameButton.innerHTML = `
-                    <div class="text-3xl mb-2">${game.emoji}</div>
-                    <div class="font-semibold mb-1">${game.name}</div>
+                    <div class="text-3xl mb-2">${game.emoji}</div> <div class="font-semibold mb-1">${game.name}</div>
                     <div class="text-sm opacity-75">${game.players} giocatori</div>
                 `;
                 gamesGrid.appendChild(gameButton);
-            });
+            }); [cite_start]/* [cite: 102] */
         }
 
         // Select game
         function selectGame(gameName) {
-            currentBooking.game = gameName;
-            currentBooking.step = 'booking';
-            navigationHistory.push('booking');
+            currentBooking.game = gameName; [cite_start]/* [cite: 103] */
+            currentBooking.step = 'booking'; [cite_start]/* [cite: 103] */
+            navigationHistory.push('booking'); [cite_start]/* [cite: 103] */
             
             showBookingForm();
             updateBreadcrumb();
@@ -436,88 +401,86 @@
 
         // Show booking form
         function showBookingForm() {
-            document.getElementById('game-selection').classList.add('hidden');
-            document.getElementById('booking-form').classList.remove('hidden');
-            document.getElementById('booking-form').classList.add('fade-in');
+            document.getElementById('game-selection').classList.add('hidden'); [cite_start]/* [cite: 104] */
+            document.getElementById('booking-form').classList.remove('hidden'); [cite_start]/* [cite: 104] */
+            document.getElementById('booking-form').classList.add('fade-in'); [cite_start]/* [cite: 104] */
             
             // Show campaign type selection only for role-playing games
-            const campaignTypeDiv = document.getElementById('campaign-type-selection');
+            const campaignTypeDiv = document.getElementById('campaign-type-selection'); [cite_start]/* [cite: 105] */
             if (currentBooking.category === 'role') {
-                campaignTypeDiv.classList.remove('hidden');
+                campaignTypeDiv.classList.remove('hidden'); [cite_start]/* [cite: 106] */
             } else {
-                campaignTypeDiv.classList.add('hidden');
+                campaignTypeDiv.classList.add('hidden'); [cite_start]/* [cite: 107] */
             }
             
             // Populate summary
-            document.getElementById('selected-game').textContent = currentBooking.game;
+            document.getElementById('selected-game').textContent = currentBooking.game; [cite_start]/* [cite: 108] */
             document.getElementById('selected-date').textContent = getNextFridayEventTime().toLocaleDateString('it-IT', {
                 weekday: 'long',
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
-            });
+            }); [cite_start]/* [cite: 109] */
         }
 
         // Select campaign type
         function selectCampaignType(type) {
-            document.getElementById('campaign-type').value = type;
+            document.getElementById('campaign-type').value = type; [cite_start]/* [cite: 110] */
             // Update button styles
-            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
-            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
+            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400'); [cite_start]/* [cite: 110] */
+            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400'); [cite_start]/* [cite: 111] */
             if (type === 'oneshot') {
-                document.getElementById('oneshot-btn').classList.add('bg-green-500', 'border-green-400');
+                document.getElementById('oneshot-btn').classList.add('bg-green-500', 'border-green-400'); [cite_start]/* [cite: 112] */
             } else {
-                document.getElementById('campaign-btn').classList.add('bg-green-500', 'border-green-400');
+                document.getElementById('campaign-btn').classList.add('bg-green-500', 'border-green-400'); [cite_start]/* [cite: 113] */
             }
         }
 
         async function submitBooking(event) { // Rendi la funzione async
-            event.preventDefault();
-            const campaignTypeField = document.getElementById('campaign-type');
-            const campaignType = campaignTypeField ? campaignTypeField.value : null;
+            event.preventDefault(); [cite_start]/* [cite: 114] */
+            const campaignTypeField = document.getElementById('campaign-type'); [cite_start]/* [cite: 114] */
+            const campaignType = campaignTypeField ? campaignTypeField.value : null; [cite_start]/* [cite: 115] */
             const booking = {
-                id: Date.now(), // ID univoco per la prenotazione
-                category: currentBooking.category,
-                game: currentBooking.game,
-                playerName: document.getElementById('player-name').value,
-                notes: document.getElementById('notes').value,
-                campaignType: campaignType,
-                date: getNextFridayEventTime().toISOString(), // Usa l'ora dell'evento
-                timestamp: new Date().toISOString(),
-                isPermanent: campaignType === 'campaign' // Le campagne sono permanenti
+                [cite_start]id: Date.now(), // ID univoco per la prenotazione /* [cite: 115] */
+                [cite_start]category: currentBooking.category, /* [cite: 115] */
+                [cite_start]game: currentBooking.game, /* [cite: 115] */
+                [cite_start]playerName: document.getElementById('player-name').value, /* [cite: 115] */
+                [cite_start]notes: document.getElementById('notes').value, /* [cite: 115] */
+                [cite_start]campaignType: campaignType, /* [cite: 116] */
+                [cite_start]date: getNextFridayEventTime().toISOString(), // Usa l'ora dell'evento /* [cite: 116] */
+                [cite_start]timestamp: new Date().toISOString(), /* [cite: 116] */
+                [cite_start]isPermanent: campaignType === 'campaign' // Le campagne sono permanenti /* [cite: 116] */
             };
-
             try {
                 const { data, error } = await supabase
-                    .from('bookings') // Nome della tua tabella
-                    .insert([booking]); // Inserisce la riga del booking
+                    [cite_start].from('bookings') // Nome della tua tabella /* [cite: 117] */
+                    .insert([booking]); [cite_start]/* [cite: 118] */
 
                 if (error) {
-                    console.error("Errore durante la prenotazione con Supabase:", error.message);
-                    alert('Errore durante la prenotazione: ' + error.message);
+                    console.error("Errore durante la prenotazione con Supabase:", error.message); [cite_start]/* [cite: 119] */
+                    alert('Errore durante la prenotazione: ' + error.message); [cite_start]/* [cite: 119] */
                 } else {
-                    showSuccessMessage(booking);
-                    await displayCurrentBookings(); // Ricarica le prenotazioni dopo l'aggiunta
+                    showSuccessMessage(booking); [cite_start]/* [cite: 120] */
+                    await displayCurrentBookings(); [cite_start]// Ricarica le prenotazioni dopo l'aggiunta /* [cite: 120] */
                 }
             } catch (error) {
-                console.error("Errore di rete o server (Supabase):", error);
-                alert('Impossibile connettersi al server per la prenotazione.');
+                console.error("Errore di rete o server (Supabase):", error); [cite_start]/* [cite: 121] */
+                alert('Impossibile connettersi al server per la prenotazione.'); [cite_start]/* [cite: 121] */
             }
         }
 
         // Show success message
         function showSuccessMessage(booking) {
-            document.getElementById('booking-form').classList.add('hidden');
-            document.getElementById('success-message').classList.remove('hidden');
-            document.getElementById('success-message').classList.add('fade-in');
+            document.getElementById('booking-form').classList.add('hidden'); [cite_start]/* [cite: 122] */
+            document.getElementById('success-message').classList.remove('hidden'); [cite_start]/* [cite: 122] */
+            document.getElementById('success-message').classList.add('fade-in'); [cite_start]/* [cite: 122] */
             
             document.getElementById('booking-details').innerHTML = `
                 <p><strong>Gioco:</strong> ${booking.game}</p>
                 <p><strong>Nome:</strong> ${booking.playerName}</p>
-                ${booking.campaignType ? `<p><strong>Tipo:</strong> ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}</p>` : ''}
-                <p><strong>ID Prenotazione:</strong> #${booking.id}</p>
-            `;
-            document.getElementById('breadcrumb').classList.add('hidden');
+                ${booking.campaignType ? `<p><strong>Tipo:</strong> ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}</p>` : ''} <p><strong>ID Prenotazione:</strong> #${booking.id}</p>
+            `; [cite_start]/* [cite: 124] */
+            document.getElementById('breadcrumb').classList.add('hidden'); [cite_start]/* [cite: 124] */
         }
 
         // Reset booking
@@ -526,22 +489,22 @@
                 category: '',
                 game: '',
                 time: '',
-                step: 'category'
+                [cite_start]step: 'category' /* [cite: 125] */
             };
-            navigationHistory = ['category'];
+            navigationHistory = ['category']; [cite_start]/* [cite: 125] */
             
-            document.getElementById('success-message').classList.add('hidden');
-            document.getElementById('category-selection').classList.remove('hidden');
-            document.getElementById('category-selection').classList.add('fade-in');
+            document.getElementById('success-message').classList.add('hidden'); [cite_start]/* [cite: 126] */
+            document.getElementById('category-selection').classList.remove('hidden'); [cite_start]/* [cite: 126] */
+            document.getElementById('category-selection').classList.add('fade-in'); [cite_start]/* [cite: 126] */
             
             // Reset form
-            document.getElementById('player-name').value = '';
-            document.getElementById('notes').value = '';
-            document.getElementById('campaign-type').value = '';
+            document.getElementById('player-name').value = ''; [cite_start]/* [cite: 127] */
+            document.getElementById('notes').value = ''; [cite_start]/* [cite: 127] */
+            document.getElementById('campaign-type').value = ''; [cite_start]/* [cite: 127] */
             
             // Reset campaign type buttons
-            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400');
-            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400');
+            document.getElementById('oneshot-btn').classList.remove('bg-green-500', 'border-green-400'); [cite_start]/* [cite: 128] */
+            document.getElementById('campaign-btn').classList.remove('bg-green-500', 'border-green-400'); [cite_start]/* [cite: 128] */
             
             updateBreadcrumb();
         }
@@ -549,45 +512,45 @@
         // Go back
         function goBack() {
             if (navigationHistory.length > 1) {
-                navigationHistory.pop();
-                const previousStep = navigationHistory[navigationHistory.length - 1];
+                navigationHistory.pop(); [cite_start]/* [cite: 129] */
+                const previousStep = navigationHistory[navigationHistory.length - 1]; [cite_start]/* [cite: 129] */
                 
                 // Hide all sections
-                document.getElementById('category-selection').classList.add('hidden');
-                document.getElementById('game-selection').classList.add('hidden');
-                document.getElementById('booking-form').classList.add('hidden');
+                document.getElementById('category-selection').classList.add('hidden'); [cite_start]/* [cite: 130] */
+                document.getElementById('game-selection').classList.add('hidden'); [cite_start]/* [cite: 130] */
+                document.getElementById('booking-form').classList.add('hidden'); [cite_start]/* [cite: 130] */
                 
                 // Show appropriate section
                 if (previousStep === 'category') {
-                    document.getElementById('category-selection').classList.remove('hidden');
-                    currentBooking.step = 'category';
+                    document.getElementById('category-selection').classList.remove('hidden'); [cite_start]/* [cite: 131] */
+                    currentBooking.step = 'category'; [cite_start]/* [cite: 131] */
                 } else if (previousStep === 'game') {
-                    showGameSelection(currentBooking.category);
-                    currentBooking.step = 'game';
+                    showGameSelection(currentBooking.category); [cite_start]/* [cite: 132] */
+                    currentBooking.step = 'game'; [cite_start]/* [cite: 132] */
                 }
                 
-                updateBreadcrumb();
+                updateBreadcrumb(); [cite_start]/* [cite: 133] */
             }
         }
 
         // Update breadcrumb
         function updateBreadcrumb() {
-            const breadcrumb = document.getElementById('breadcrumb');
-            const breadcrumbContent = document.getElementById('breadcrumb-content');
+            const breadcrumb = document.getElementById('breadcrumb'); [cite_start]/* [cite: 134] */
+            const breadcrumbContent = document.getElementById('breadcrumb-content'); [cite_start]/* [cite: 134] */
             
             if (navigationHistory.length > 1) {
-                breadcrumb.classList.remove('hidden');
+                breadcrumb.classList.remove('hidden'); [cite_start]/* [cite: 135] */
                 const steps = {
                     category: '🏠 Categorie',
-                    game: `🎮 ${currentBooking.category ? getCategoryName(currentBooking.category) : 'Giochi'}`,
+                    [cite_start]game: `🎮 ${currentBooking.category ? getCategoryName(currentBooking.category) : 'Giochi'}`, /* [cite: 136] */
                     booking: '📝 Prenotazione'
-                };
+                }; [cite_start]/* [cite: 137] */
                 breadcrumbContent.innerHTML = navigationHistory.map((step, index) => {
                     const isLast = index === navigationHistory.length - 1;
                     return `<span class="${isLast ? 'text-yellow-300 font-semibold' : 'text-white/70'}">${steps[step]}</span>`;
-                }).join(' <span class="text-white/50">→</span> ');
+                }).join(' <span class="text-white/50">→</span> '); [cite_start]/* [cite: 138] */
             } else {
-                breadcrumb.classList.add('hidden');
+                breadcrumb.classList.add('hidden'); [cite_start]/* [cite: 139] */
             }
         }
 
@@ -596,86 +559,85 @@
             const names = {
                 role: 'Giochi di Ruolo',
                 board: 'Giochi da Tavolo'
-            };
-            return names[category] || category;
+            }; [cite_start]/* [cite: 140] */
+            return names[category] || category; [cite_start]/* [cite: 140] */
         }
 
         // Display current bookings
         async function displayCurrentBookings() { // Rendi la funzione async
-            const container = document.getElementById('current-bookings');
-            container.innerHTML = '<p class="text-white/70 text-center">Caricamento prenotazioni...</p>'; // Messaggio di caricamento
+            const container = document.getElementById('current-bookings'); [cite_start]/* [cite: 141] */
+            container.innerHTML = '<p class="text-white/70 text-center">Caricamento prenotazioni...</p>'; [cite_start]// Messaggio di caricamento /* [cite: 141] */
 
             try {
                 const { data: bookings, error } = await supabase
-                    .from('bookings') // Nome della tua tabella
-                    .select('*');     // Seleziona tutte le colonne
+                    [cite_start].from('bookings') // Nome della tua tabella /* [cite: 142] */
+                    .select('*'); [cite_start]/* [cite: 142] */
 
                 if (error) {
-                    console.error("Errore nel recupero prenotazioni da Supabase:", error.message);
-                    container.innerHTML = `<p class="text-red-300 text-center">Errore nel caricamento: ${error.message}</p>`;
+                    console.error("Errore nel recupero prenotazioni da Supabase:", error.message); [cite_start]/* [cite: 143] */
+                    container.innerHTML = `<p class="text-red-300 text-center">Errore nel caricamento: ${error.message}</p>`; [cite_start]/* [cite: 143] */
                     return;
                 }
 
                 if (bookings.length === 0) {
-                    container.innerHTML = '<p class="text-white/70 text-center">Nessuna prenotazione attiva</p>';
+                    container.innerHTML = '<p class="text-white/70 text-center">Nessuna prenotazione attiva</p>'; [cite_start]/* [cite: 144] */
                     return;
                 }
 
                 container.innerHTML = bookings.map(booking => `
                     <div class="bg-white/10 rounded-lg p-4 flex justify-between items-center" data-booking-id="${booking.id}">
                         <div class="text-white">
-                            <div class="font-semibold">${booking.game}</div>
-                            <div class="text-sm opacity-75">${booking.playerName}${booking.campaignType ? ` • ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}` : ''}</div>
+                            <div class="font-semibold">${booking.game}</div> <div class="text-sm opacity-75">${booking.playerName}${booking.campaignType ? ` • ${booking.campaignType === 'campaign' ? 'Campagna' : 'One Shot'}` : ''}</div>
                         </div>
-                        <button onclick="cancelBooking('${booking.id}')" class="text-red-300 hover:text-red-200 transition-colors text-xl px-2 py-1 rounded hover:bg-red-500/20">
-                            ❌
+                        <button onclick="cancelBooking('${booking.id}')" class="text-red-300 hover:text-red-200 transition-colors text-xl px-2 py-1 rounded hover:bg-red-500/20"> ❌
                         </button>
                     </div>
-                `).join('');
+                `).join(''); [cite_start]/* [cite: 147] */
             } catch (error) {
-                console.error("Errore generico nel recupero delle prenotazioni da Supabase:", error);
-                container.innerHTML = '<p class="text-red-300 text-center">Impossibile caricare le prenotazioni. Riprova più tardi.</p>';
+                console.error("Errore generico nel recupero delle prenotazioni da Supabase:", error); [cite_start]/* [cite: 148] */
+                container.innerHTML = '<p class="text-red-300 text-center">Impossibile caricare le prenotazioni. Riprova più tardi.</p>'; [cite_start]/* [cite: 149] */
             }
         }
 
         async function cancelBooking(bookingId) { // Rendi la funzione async
-            const numericId = bookingId; // L'ID di Supabase può essere stringa o numero, usiamo come è
+            const numericId = bookingId; [cite_start]/* [cite: 150] */
+            // L'ID di Supabase può essere stringa o numero, usiamo come è
 
             // Trova l'elemento della prenotazione e aggiungi l'animazione di fade-out
-            const bookingElement = document.querySelector(`[data-booking-id="${bookingId}"]`);
+            const bookingElement = document.querySelector(`[data-booking-id="${bookingId}"]`); [cite_start]/* [cite: 151] */
             if (bookingElement) {
-                bookingElement.style.transition = 'all 0.5s ease-out';
-                bookingElement.style.opacity = '0';
-                bookingElement.style.transform = 'translateX(-100px)';
+                bookingElement.style.transition = 'all 0.5s ease-out'; [cite_start]/* [cite: 152] */
+                bookingElement.style.opacity = '0'; [cite_start]/* [cite: 152] */
+                bookingElement.style.transform = 'translateX(-100px)'; [cite_start]/* [cite: 152] */
 
                 // Aspetta che l'animazione sia completa prima di rimuovere da Supabase
                 setTimeout(async () => {
                     try {
                         const { error } = await supabase
-                            .from('bookings') // Nome della tua tabella
+                            [cite_start].from('bookings') // Nome della tua tabella /* [cite: 153] */
                             .delete()
-                            .eq('id', bookingId); // Cancella la riga dove la colonna 'id' è uguale a bookingId
+                            .eq('id', bookingId); [cite_start]// Cancella la riga dove la colonna 'id' è uguale a bookingId /* [cite: 154] */
 
                         if (error) {
-                            console.error("Errore durante la cancellazione con Supabase:", error.message);
-                            alert('Errore durante la cancellazione: ' + error.message);
-                            bookingElement.style.opacity = '1'; // Ripristina l'opacità se errore
-                            bookingElement.style.transform = 'translateX(0)';
+                            console.error("Errore durante la cancellazione con Supabase:", error.message); [cite_start]/* [cite: 154] */
+                            alert('Errore durante la cancellazione: ' + error.message); [cite_start]/* [cite: 154] */
+                            bookingElement.style.opacity = '1'; [cite_start]// Ripristina l'opacità se errore /* [cite: 155] */
+                            bookingElement.style.transform = 'translateX(0)'; [cite_start]/* [cite: 155] */
                         } else {
-                            await displayCurrentBookings(); // Ricarica le prenotazioni dopo la cancellazione
+                            await displayCurrentBookings(); [cite_start]// Ricarica le prenotazioni dopo la cancellazione /* [cite: 156] */
                         }
                     } catch (error) {
-                        console.error("Errore di rete o server (Supabase) durante la cancellazione:", error);
-                        alert('Impossibile connettersi al server per la cancellazione.');
-                        bookingElement.style.opacity = '1'; // Ripristina l'opacità se errore
-                        bookingElement.style.transform = 'translateX(0)';
+                        console.error("Errore di rete o server (Supabase) durante la cancellazione:", error); [cite_start]/* [cite: 157] */
+                        alert('Impossibile connettersi al server per la cancellazione.'); [cite_start]/* [cite: 157] */
+                        bookingElement.style.opacity = '1'; [cite_start]/* [cite: 158] */
+                        bookingElement.style.transform = 'translateX(0)'; [cite_start]/* [cite: 159] */
                     }
-                }, 500);
+                }, 500); [cite_start]/* [cite: 160] */
             }
         }
 
         // Initialize when page loads
-        document.addEventListener('DOMContentLoaded', init);
+        document.addEventListener('DOMContentLoaded', init); [cite_start]/* [cite: 161] */
     </script>
 </body>
 </html>
