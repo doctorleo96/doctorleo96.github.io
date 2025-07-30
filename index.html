@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prenotazioni Giochi Venerdì Sera</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
         body { font-family: 'Inter', sans-serif; }
@@ -148,7 +148,7 @@
                             <label class="block text-white font-semibold mb-2">Note Aggiuntive (opzionale)</label>
                             <textarea id="notes" rows="3" class="w-full p-3 rounded-lg bg-white/20 text-white placeholder-white/70 border border-white/30 focus:border-yellow-300 focus:outline-none" placeholder="Eventuali richieste speciali..."></textarea>
                         </div>
-                    
+                        
                         <button type="submit" class="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
                             🎯 Conferma Prenotazione
                         </button>
@@ -179,28 +179,36 @@
     </div>
 
     <script>
-        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE';
+        // Configurazione Supabase 
+        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; 
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; 
         
+        // Inizializza il client Supabase
         const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // ********* VARIABILI GLOBALI (DICHIARATE QUI PER PRIMA) *********
+        // Current booking state
         let currentBooking = {
             category: '',
             game: '',
             time: '',
             step: 'category'
         };
+        // Navigation history
         let navigationHistory = ['category'];
+        // ********* FINE DELLE VARIABILI GLOBALI *********
+
 
         async function init() {
             updateCountdown();
             await displayCurrentBookings();
             setInterval(updateCountdown, 1000);
 
-            // checkWeeklyReset();
-            // setInterval(checkWeeklyReset, 60000);
+            // checkWeeklyReset(); 
+            // setInterval(checkWeeklyReset, 60000); 
         }
 
+        // Game data structure
         const gameData = {
             role: [
                 { name: 'Dungeons & Dragons 5e', emoji: '🐉', players: '3-6' },
@@ -441,8 +449,8 @@
                     await displayCurrentBookings();
                 }
             } catch (error) {
-                console.error("Errore di rete o server (Supabase):", error);
-                alert('Impossibile connettersi al server per la prenotazione.');
+                    alert('Impossibile connettersi al server per la prenotazione: ' + error.message);
+                    console.error("Errore di rete o server (Supabase):", error);
             }
         }
         function showSuccessMessage(booking) {
