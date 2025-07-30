@@ -180,11 +180,24 @@
 
     <script>
         // Configurazione Supabase (INSERISCI QUI I TUOI VALORI ESATTI)
-        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; [cite_start]// Il tuo URL di Supabase [cite: 1]
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; [cite_start]// La tua chiave anon public [cite: 1]
+        const SUPABASE_URL = 'https://axqovfvedfgjmdfeefnb.supabase.co'; // Il tuo URL di Supabase
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF4cW92ZnZlZGZnam1kZmVlZm5iIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM4OTk5NjEsImV4cCI6MjA2OTQ3NTk2MX0.jNd2kSRJGiLl3ZO0Vu9bwm8qtygBs9wu5vNtg5Dq_GE'; // La tua chiave anon public
         
         // Inizializza il client Supabase
         const supabase = supabase_js.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // ********* VARIABILI GLOBALI (DICHIARATE QUI PER PRIMA) *********
+        // Current booking state
+        let currentBooking = {
+            category: '',
+            game: '',
+            time: '',
+            step: 'category'
+        };
+        // Navigation history
+        let navigationHistory = ['category'];
+        // ********* FINE DELLE VARIABILI GLOBALI *********
+
 
         async function init() {
             updateCountdown();
@@ -272,16 +285,6 @@
                 { name: 'PICCHIATELLO', emoji: '🤪', players: '2-6' }
             ]
         };
-        // Current booking state
-        let currentBooking = {
-            category: '',
-            game: '',
-            time: '',
-            step: 'category'
-        };
-        // Navigation history
-        let navigationHistory = ['category'];
-
         // Get next Friday at 20:00 (8 PM) for reset
         // Update countdown to next Friday (for the event, still at 23:59:59 as in your original code)
         // Se vuoi il countdown fino al venerdì sera in generale (23:59)
